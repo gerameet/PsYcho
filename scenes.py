@@ -3,12 +3,43 @@ import numpy as np
 import soundfile as sf
 
 from utils import *
+from scenes import *
+
+
+class Timer(object):
+    '''
+    Timer class
+    '''
+    def __init__(self, screen: Stage, radius : float):
+        '''
+        Timer class constructor
+
+        Parameters:
+            screen (Stage): stage object
+        '''
+        self.display = screen
+        self.radius = radius
+        pass
+
+    def draw_timer_ring(self, time_elapsed, max_time):
+        '''
+        Draw a timer ring
+
+        Parameters:
+            time_elapsed (int): time elapsed
+            max_time (int): maximum time
+        '''
+        arc_rect = pygame.Rect(0.9*self.display.width, 0.1*self.display.height, 2*self.radius, 2*self.radius)
+        proportion = time_elapsed / max_time
+        angle = 2 * 3.14 * proportion
+        self.timer = pygame.draw.arc(self.display.screen, (255, 255 - int(255 * proportion), 255 - int(128 * proportion)), (700, 10, 50, 50), 0, angle, 5)
+        pass
 
 class Movement(object):
     '''
     Movement class
     '''
-    def __init__(self, color: tuple, position, screen: Stage):
+    def __init__(self, color: tuple, position, screen: Stage, timer : Timer):
         '''
         Movement class constructor
 
@@ -20,6 +51,7 @@ class Movement(object):
         self.object_creator = Item(color, position)
         self.position = position
         self.display = screen
+        self.timer = timer
         self.object_history = []
         pass
 
@@ -36,7 +68,7 @@ class Movement(object):
         if (mode == 'dot'):
             self.object_creator.dot(radius)
         elif (mode == 'arrow'):
-            self.object_creator.arrow(arrow_dims)
+            self.object_creator.arrow(arrow_dims[0:3], arrow_dims[3])
         elif (mode == 'plus'):
             self.object_creator.plus(plus_dims)
         else:
@@ -79,10 +111,12 @@ class Movement(object):
             current_x = self.start_pos_x + progress * (self.end_pos_x - self.start_pos_x)
             current_y = self.start_pos_y + progress * (self.end_pos_y - self.start_pos_y)
             self.position = (current_x, current_y)
-            self.display.screen.fill((0, 0, 0))
+            self.display.screen.fill(self.display.color)
             self.display.screen.blit(self.object, self.position)
+
+            self.timer.draw_timer_ring(elapsed_time, time)
+
             pygame.display.update()
-            # clock.tick(60)
             pygame.display.flip()
             self.display.clock.tick(60)
         self.position = (self.end_pos_x, self.end_pos_y)
@@ -123,7 +157,7 @@ class Sound(object):
     '''
     Sound class
     '''
-    def __init__(self, screen: Stage):
+    def __init__(self, screen: Stage, timer: Timer):
         '''
         Sound class constructor
 
@@ -132,9 +166,10 @@ class Sound(object):
         '''
         self.object_creator = Item()
         self.display = screen
+        self.timer = timer
         pass
 
-    def createBeep(self, frequency: int, duration: int, aplitude: int):
+    def createBeep(self, frequency: int, duration: int, amplitude: int):
         '''
         Create a beep sound
 
@@ -143,22 +178,23 @@ class Sound(object):
             duration (int): duration of the beep
             amplitude (int): amplitude of the beep
         '''
+        amplitude = amplitude*1000
         self.freq = frequency
         self.dur = duration
-        self.amp = aplitude
-        self.sound = self.object_creator.beep(frequency, duration, aplitude)
-        sf.write(f"beep_f{frequency}_dur{duration}_amp{aplitude}.mp4", self.sound, 44100, format='WAV', subtype='PCM_16')
-        pass
+        self.amp = amplitude
+        self.sound = self.object_creator.beep(frequency, duration, amplitude)
+        self.file_name = f"beep_f{frequency}_dur{duration}_amp{amplitude}.wav"
+        sf.write(f"beep_f{frequency}_dur{duration}_amp{amplitude}.wav", self.sound, 44100, format='WAV', subtype='PCM_16')
 
-    def play(self, ear: str, beep_file_name: str):
+    def play(self, ear: str):
         '''
         Plays the sound
 
         Parameters:
             ear (str): ear to play the sound
-            beep_file_name (str): name of the beep file
         '''
-        beep = pygame.mixer.Sound(beep_file_name)
+        pygame.mixer.init()
+        beep = pygame.mixer.Sound(self.file_name)
         channel = pygame.mixer.Channel(0)
         if (ear == 'left'):
             channel.set_volume(1.0, 0.0)
@@ -168,29 +204,18 @@ class Sound(object):
             print("Invalid ear!")
         channel.play(beep)
 
-class Timer(object):
-    '''
-    Timer class
-    '''
-    def __init__(self, screen: Stage):
-        '''
-        Timer class constructor
+        start_time = pygame.time.get_ticks()
+        while True:
+            elapsed_time = (pygame.time.get_ticks() - start_time) / 1000.0
+            if elapsed_time > self.dur:
+                break
+            progress = elapsed_time / self.dur
+            self.display.screen.fill(self.display.color)
+            self.timer.draw_timer_ring(elapsed_time, self.dur)
 
-        Parameters:
-            screen (Stage): stage object
-        '''
-        self.display = screen
-        pass
+            pygame.display.update()
+            pygame.display.flip()
+            self.display.clock.tick(60)
+        pygame.display.update()
 
-    def draw_timer_ring(self, time_elapsed, max_time):
-        '''
-        Draw a timer ring
 
-        Parameters:
-            time_elapsed (int): time elapsed
-            max_time (int): maximum time
-        '''
-        proportion = time_elapsed / max_time
-        angle = 2 * 3.14 * proportion
-        # self.timer = pygame.draw.arc(self.display, (0, 255 - int(255 * proportion), 0), (700, 10, 50, 50), 0, angle, 5)
-        pass

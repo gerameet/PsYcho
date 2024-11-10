@@ -85,7 +85,7 @@ class Item(object):
         self.object = dot
         return dot
 
-    def arrow(self, arrow_dims: list):
+    def arrow(self, arrow_dims: list, head_dir: str):
         '''
         Create an arrow item
 
@@ -95,10 +95,16 @@ class Item(object):
         self.length = arrow_dims[0]
         self.width = arrow_dims[1]
         self.head_height = arrow_dims[2]
+        self.head_dir = head_dir
         arrow = pygame.Surface((self.length, self.width), pygame.SRCALPHA)
         pygame.draw.polygon(arrow, self.color, [(0, 0), (self.length, self.width//2), (0, self.width)])
         pygame.draw.polygon(arrow, self.color, [(self.length - self.head_height, 0), (self.length, self.width//2), (self.length - self.head_height, self.width)])
-        self.object = arrow
+        
+        if (self.head_dir == 'right'):
+            self.object = arrow
+        else:
+            arrow = pygame.transform.flip(arrow, True, False)
+            self.object = arrow
         return arrow
 
     def plus(self, plus_dims: list):
