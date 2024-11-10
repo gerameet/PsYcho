@@ -19,7 +19,7 @@ class Movement(object):
         '''
         self.object_creator = Item(color, position)
         self.position = position
-        self.screen = screen
+        self.display = screen
         self.object_history = []
         pass
 
@@ -45,26 +45,50 @@ class Movement(object):
         self.object_history.append(self.object)
         pass
     
-    def move(self, direction: str, speed: int):
+    def move(self, direction: str, speed: int, time: float):
         '''
         Move the object
 
         Parameters:
             direction (str): direction of the movement
             speed (int): speed of the movement
+            time (float): time of the movement
         '''
         self.dir = direction
         self.speed = speed
+
         if (direction == 'left'):
-            direction = -1
+            dir = -1
             self.start_pos_x = self.position[0]
             self.start_pos_y = self.position[1]
         elif (direction == 'right'):
-            direction = 1
+            dir = 1
             self.start_pos_x = self.position[0]
             self.start_pos_y = self.position[1]
         else:
             print("Invalid direction!")
+        self.end_pos_x = self.start_pos_x + dir * speed * time
+        self.end_pos_y = self.start_pos_y
+
+        start_time = pygame.time.get_ticks()
+        while True:
+            elapsed_time = (pygame.time.get_ticks() - start_time) / 1000.0
+            if elapsed_time > time:
+                break
+            progress = elapsed_time / time
+            current_x = self.start_pos_x + progress * (self.end_pos_x - self.start_pos_x)
+            current_y = self.start_pos_y + progress * (self.end_pos_y - self.start_pos_y)
+            self.position = (current_x, current_y)
+            self.display.screen.fill((0, 0, 0))
+            self.display.screen.blit(self.object, self.position)
+            pygame.display.update()
+            # clock.tick(60)
+            pygame.display.flip()
+            self.display.clock.tick(60)
+        self.position = (self.end_pos_x, self.end_pos_y)
+        self.display.screen.blit(self.object, self.position)
+        pygame.display.update()
+
         pass
 
 class Direction(object):
@@ -82,7 +106,7 @@ class Direction(object):
         '''
         self.position = position
         self.object_creator = Item(color, position)
-        self.screen = screen
+        self.display = screen
         pass
 
     def createArrow(self, arrow_dims: list):
@@ -107,7 +131,7 @@ class Sound(object):
             screen (Stage): stage object
         '''
         self.object_creator = Item()
-        self.screen = screen
+        self.display = screen
         pass
 
     def createBeep(self, frequency: int, duration: int, aplitude: int):
@@ -155,7 +179,7 @@ class Timer(object):
         Parameters:
             screen (Stage): stage object
         '''
-        self.screen = screen
+        self.display = screen
         pass
 
     def draw_timer_ring(self, time_elapsed, max_time):
@@ -168,5 +192,5 @@ class Timer(object):
         '''
         proportion = time_elapsed / max_time
         angle = 2 * 3.14 * proportion
-        # self.timer = pygame.draw.arc(self.screen, (0, 255 - int(255 * proportion), 0), (700, 10, 50, 50), 0, angle, 5)
+        # self.timer = pygame.draw.arc(self.display, (0, 255 - int(255 * proportion), 0), (700, 10, 50, 50), 0, angle, 5)
         pass
