@@ -22,6 +22,7 @@ class Movement(object):
         self.display = screen
         self.timer = timer
         self.object = []
+        self.is_beep = False
         pass
 
     def createObject(self, mode: list = None, radius: int = None, arrow_dims: list = None, plus_dims: list = None, sound_dims: list = None):
@@ -52,22 +53,8 @@ class Movement(object):
         if ('plus' in mode):
             self.object_creator.plus(plus_dims)
             self.object.append(self.object_creator.object)
-        else:
+        elif ('plus' not in mode and 'arrow' not in mode and 'dot' not in mode and 'beep' not in mode):
             print("Invalid mode!")
-
-        # else:
-        #     if ('Movement' in mode and 'Sound' in mode):
-        #         self.is_beep = True
-        #         self.beep = Sound(self.display, self.timer)
-        #         frequency = sound_dims[0]
-        #         duration = sound_dims[1]
-        #         amplitude = sound_dims[2]
-        #         self.beep.createBeep(frequency, duration, amplitude)
-        #         self.object_creator.plus(plus_dims)
-        #         self.object = self.object_creator.object
-        #     elif ('Movement' in mode and 'Direction' in mode):
-        #         self.object_creator.arrow(arrow_dims[0:3], arrow_dims[3])
-        #         self.object = self.object_creator.object
         pass
     
     def move(self, direction: list, speed: int, time: float):
