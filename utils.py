@@ -29,6 +29,7 @@ class Stage(object):
             color (tuple): color of the stage
         '''
         self.color = color
+        self.screen.fill(color)
         return None
 
     def createWindow(self, width, height, caption: str):
@@ -54,6 +55,35 @@ class Stage(object):
         '''
         pygame.quit()
         sys.exit()
+        pass
+
+class Timer(object):
+    '''
+    Timer class
+    '''
+    def __init__(self, screen: Stage, radius : float):
+        '''
+        Timer class constructor
+
+        Parameters:
+            screen (Stage): stage object
+        '''
+        self.display = screen
+        self.radius = radius
+        pass
+
+    def draw_timer_ring(self, time_elapsed, max_time):
+        '''
+        Draw a timer ring
+
+        Parameters:
+            time_elapsed (int): time elapsed
+            max_time (int): maximum time
+        '''
+        arc_rect = pygame.Rect(0.9*self.display.width, 0.1*self.display.height, 2*self.radius, 2*self.radius)
+        proportion = time_elapsed / max_time
+        angle = 2 * 3.14 * proportion
+        self.timer = pygame.draw.arc(self.display.screen, (255, 255 - int(255 * proportion), 255 - int(128 * proportion)), (700, 10, 50, 50), 0, angle, 5)
         pass
 
 class Item(object):
@@ -137,4 +167,3 @@ class Item(object):
         beep = beep.astype(np.int16)
         self.object = beep
         return beep
-

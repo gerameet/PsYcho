@@ -3,37 +3,6 @@ import numpy as np
 import soundfile as sf
 
 from utils import *
-from scenes import *
-
-
-class Timer(object):
-    '''
-    Timer class
-    '''
-    def __init__(self, screen: Stage, radius : float):
-        '''
-        Timer class constructor
-
-        Parameters:
-            screen (Stage): stage object
-        '''
-        self.display = screen
-        self.radius = radius
-        pass
-
-    def draw_timer_ring(self, time_elapsed, max_time):
-        '''
-        Draw a timer ring
-
-        Parameters:
-            time_elapsed (int): time elapsed
-            max_time (int): maximum time
-        '''
-        arc_rect = pygame.Rect(0.9*self.display.width, 0.1*self.display.height, 2*self.radius, 2*self.radius)
-        proportion = time_elapsed / max_time
-        angle = 2 * 3.14 * proportion
-        self.timer = pygame.draw.arc(self.display.screen, (255, 255 - int(255 * proportion), 255 - int(128 * proportion)), (700, 10, 50, 50), 0, angle, 5)
-        pass
 
 class Movement(object):
     '''
@@ -52,48 +21,72 @@ class Movement(object):
         self.position = position
         self.display = screen
         self.timer = timer
-        self.object_history = []
+        self.object = []
         pass
 
-    def createObject(self, mode: str, radius: int = None, arrow_dims: list = None, plus_dims: list = None):
+    def createObject(self, mode: list = None, radius: int = None, arrow_dims: list = None, plus_dims: list = None, sound_dims: list = None):
         '''
         Create an object
 
         Parameters:
-            mode (str): mode of the object
+            mode (list): mode of the object
             radius (int): radius of the object
             arrow_dims (list): dimensions of the arrow
             plus_dims (list): dimensions of the plus
         '''
-        if (mode == 'dot'):
+        self.mode = mode
+        if ('beep' in mode):
+            self.is_beep = True
+            self.beep = Sound(self.display, self.timer)
+            frequency = sound_dims[0]
+            duration = sound_dims[1]
+            amplitude = sound_dims[2]
+            self.beep.createBeep(frequency, duration, amplitude)
+            self.object.append(self.beep)
+        if ('dot' in mode):
             self.object_creator.dot(radius)
-        elif (mode == 'arrow'):
+            self.object.append(self.object_creator.object)
+        if ('arrow' in mode):
             self.object_creator.arrow(arrow_dims[0:3], arrow_dims[3])
-        elif (mode == 'plus'):
+            self.object.append(self.object_creator.object)
+        if ('plus' in mode):
             self.object_creator.plus(plus_dims)
+            self.object.append(self.object_creator.object)
         else:
             print("Invalid mode!")
-        self.object = self.object_creator.object
-        self.object_history.append(self.object)
+
+        # else:
+        #     if ('Movement' in mode and 'Sound' in mode):
+        #         self.is_beep = True
+        #         self.beep = Sound(self.display, self.timer)
+        #         frequency = sound_dims[0]
+        #         duration = sound_dims[1]
+        #         amplitude = sound_dims[2]
+        #         self.beep.createBeep(frequency, duration, amplitude)
+        #         self.object_creator.plus(plus_dims)
+        #         self.object = self.object_creator.object
+        #     elif ('Movement' in mode and 'Direction' in mode):
+        #         self.object_creator.arrow(arrow_dims[0:3], arrow_dims[3])
+        #         self.object = self.object_creator.object
         pass
     
-    def move(self, direction: str, speed: int, time: float):
+    def move(self, direction: list, speed: int, time: float):
         '''
         Move the object
 
         Parameters:
-            direction (str): direction of the movement
+            direction (list): direction of the movement of respective object in mode
             speed (int): speed of the movement
             time (float): time of the movement
         '''
         self.dir = direction
         self.speed = speed
 
-        if (direction == 'left'):
+        if (direction[-1] == 'left'):
             dir = -1
             self.start_pos_x = self.position[0]
             self.start_pos_y = self.position[1]
-        elif (direction == 'right'):
+        elif (direction[-1] == 'right'):
             dir = 1
             self.start_pos_x = self.position[0]
             self.start_pos_y = self.position[1]
@@ -102,25 +95,33 @@ class Movement(object):
         self.end_pos_x = self.start_pos_x + dir * speed * time
         self.end_pos_y = self.start_pos_y
 
+        if (self.is_beep):
+            self.beep.play(direction[0], self.is_beep)
+
         start_time = pygame.time.get_ticks()
         while True:
             elapsed_time = (pygame.time.get_ticks() - start_time) / 1000.0
             if elapsed_time > time:
                 break
             progress = elapsed_time / time
+
             current_x = self.start_pos_x + progress * (self.end_pos_x - self.start_pos_x)
             current_y = self.start_pos_y + progress * (self.end_pos_y - self.start_pos_y)
             self.position = (current_x, current_y)
+
             self.display.screen.fill(self.display.color)
-            self.display.screen.blit(self.object, self.position)
+            if ('dot' in self.mode or 'plus' in self.mode or 'arrow' in self.mode):
+                self.display.screen.blit(self.object[-1], self.position)
 
             self.timer.draw_timer_ring(elapsed_time, time)
 
             pygame.display.update()
             pygame.display.flip()
             self.display.clock.tick(60)
+
         self.position = (self.end_pos_x, self.end_pos_y)
-        self.display.screen.blit(self.object, self.position)
+        if ('dot' in self.mode or 'plus' in self.mode or 'arrow' in self.mode):
+            self.display.screen.blit(self.object[-1], self.position)
         pygame.display.update()
 
         pass
@@ -129,7 +130,7 @@ class Direction(object):
     '''
     Direction class
     '''
-    def __init__(self, position: list, color: tuple, screen: Stage):
+    def __init__(self, color: tuple, position: list, screen: Stage, timer: Timer):
         '''
         Direction class constructor
 
@@ -139,18 +140,21 @@ class Direction(object):
             screen (Stage): stage object
         '''
         self.position = position
+        self.color = color
+        self.timer = timer
         self.object_creator = Item(color, position)
         self.display = screen
-        pass
 
-    def createArrow(self, arrow_dims: list):
+    def showArrow(self, arrow_dims: list, time : float):
         '''
         Create an arrow
 
         Parameters:
             arrow_dims (list): dimensions of the arrow
         '''
-        self.arrow = self.object_creator.arrow(arrow_dims)
+        self.arrow = Movement(self.color, self.position, self.display, self.timer)
+        self.arrow.createObject(['arrow'], arrow_dims=arrow_dims)
+        self.arrow.move([arrow_dims[3]], 0, time)
         return self.arrow
         
 class Sound(object):
@@ -186,7 +190,7 @@ class Sound(object):
         self.file_name = f"beep_f{frequency}_dur{duration}_amp{amplitude}.wav"
         sf.write(f"beep_f{frequency}_dur{duration}_amp{amplitude}.wav", self.sound, 44100, format='WAV', subtype='PCM_16')
 
-    def play(self, ear: str):
+    def play(self, ear: str, is_moving: bool = False):
         '''
         Plays the sound
 
@@ -204,18 +208,19 @@ class Sound(object):
             print("Invalid ear!")
         channel.play(beep)
 
-        start_time = pygame.time.get_ticks()
-        while True:
-            elapsed_time = (pygame.time.get_ticks() - start_time) / 1000.0
-            if elapsed_time > self.dur:
-                break
-            progress = elapsed_time / self.dur
-            self.display.screen.fill(self.display.color)
-            self.timer.draw_timer_ring(elapsed_time, self.dur)
+        if (not is_moving):
+            start_time = pygame.time.get_ticks()
+            while True:
+                elapsed_time = (pygame.time.get_ticks() - start_time) / 1000.0
+                if elapsed_time > self.dur:
+                    break
+                progress = elapsed_time / self.dur
+                self.display.screen.fill(self.display.color)
+                self.timer.draw_timer_ring(elapsed_time, self.dur)
 
+                pygame.display.update()
+                pygame.display.flip()
+                self.display.clock.tick(60)
             pygame.display.update()
-            pygame.display.flip()
-            self.display.clock.tick(60)
-        pygame.display.update()
 
 
