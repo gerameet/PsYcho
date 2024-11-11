@@ -2,6 +2,16 @@ import numpy as np
 import pygame
 import sys
 
+def pause(time: float):
+    '''
+    Pause the program for a specified time
+
+    Parameters:
+        time (float): time(in SECONDS) to pause the program
+    '''
+    pygame.time.wait(int(time*1e3))
+
+
 class Stage(object):
     '''
     Stage class 
@@ -167,3 +177,21 @@ class Item(object):
         beep = beep.astype(np.int16)
         self.object = beep
         return beep
+
+
+def write_and_pause(screen, text, time):
+    '''
+    Write text on the screen and pause for a specified time
+
+    Parameters:
+        screen (Stage): the screen object to write on
+        text (str): the text to display
+        time (int): time(in SECONDS) to pause the program
+    '''
+    screen.setColor((0, 0, 0))
+    font = pygame.font.Font(None, 74)
+    rendered_text = font.render(text, True, (255, 255, 255))
+    text_rect = rendered_text.get_rect(center=(screen.width / 2, screen.height / 2))
+    screen.screen.blit(rendered_text, text_rect)
+    pygame.display.flip()
+    pause(time)
