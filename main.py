@@ -11,7 +11,7 @@ def movement_direction(num_neutral, num_mixed):
 
     write_and_pause(screen, 'Movement and Direction', text_pause_time)
     
-    write_and_pause(screen, 'Neutral Mode', text_pause_time)
+    write_and_pause(screen, 'Get familiar\nNeutral Mode', text_pause_time)
     Neutral_obj = Neutral(screen, timer)
     
     cases_Movement_or_Direction = [np.random.choice(['Movement', 'Direction']) for i in range(num_neutral)]
@@ -42,14 +42,12 @@ def movement_direction(num_neutral, num_mixed):
         
         object.createScene(tasks=['Movement', 'Direction'],speed=400, time=1, color=(0,0,0), position=[390, 290], radius=20, arrow_dims=[100, 20, 30, None])
 
-    write_and_pause(screen, 'End of Trial Run 1', text_pause_time)
-
 
 def sound_movement(num_neutral, num_mixed):
 
     write_and_pause(screen, 'Movement and Sound', text_pause_time)
     
-    write_and_pause(screen, 'Neutral Mode', text_pause_time)
+    write_and_pause(screen, 'Get familiar\nNeutral Mode', text_pause_time)
     Neutral_obj = Neutral(screen, timer)
     
     cases_Movement_or_Sound = [np.random.choice(['Movement', 'Sound']) for i in range(num_neutral)]
@@ -80,14 +78,12 @@ def sound_movement(num_neutral, num_mixed):
 
         object.createScene(tasks=['Movement', 'Sound'],speed=400, time=1, color=(0,0,0), position=[390, 290], radius=20, arrow_dims=[100, 20, 30, None], frequency=500, volume=10)
 
-    write_and_pause(screen, 'End of Trial Run 1', text_pause_time)
-
 
 def direction_sound(num_neutral, num_mixed):
 
     write_and_pause(screen, 'Direction and Sound', text_pause_time)
     
-    write_and_pause(screen, 'Neutral Mode', text_pause_time)
+    write_and_pause(screen, 'Get familiar\nNeutral Mode', text_pause_time)
     Neutral_obj = Neutral(screen, timer)
 
     cases_Direction_or_Sound = [np.random.choice(['Direction', 'Sound']) for i in range(num_neutral)]
@@ -140,7 +136,7 @@ def driver():
     sound_movement(4, 8)
     direction_sound(4, 8)
 
-    write_and_pause(screen, 'End of Trial Run 1', text_pause_time)
+    write_and_pause(screen, 'Thank you for participating :)', text_pause_time)
 
     user_id = get_user_id()
     with open('data.csv', 'r') as file:
