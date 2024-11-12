@@ -18,7 +18,7 @@ We have three stimuli - Movement, Direction and Sound. In accordance to the Stro
 ### Designing the Experiment
 We have made a game with `python` using `pygame` library. 
 The code has been structured to be as modular as possibe to make it easy for the reader or the user to understand and make changes to it for self-use as deemed fit. Following is the folder structure:
-
+```
 ├── README.md
 ├── beep_f500_dur1_amp10000.wav
 ├── beep_f500_dur2_amp10000.wav
@@ -32,7 +32,7 @@ The code has been structured to be as modular as possibe to make it easy for the
 ├── tasks.py
 ├── user_ids.txt
 └── utils.py
-
+```
 Description of files:
 1. `utils.py` consists of the helper functions that contain classes for creating scene (the game window), items to be displayed during a task, a timer to show during a scene and two classes that help with presenting text on the window and initiating pauses between scenes.
 2. `tasks.py` consists of the classes for each of the **tasks** (from Neutral, Conflict and Congruent) along with other helper functions used to achieve the render a desired output scene.
