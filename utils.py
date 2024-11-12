@@ -93,7 +93,7 @@ class Timer(object):
         arc_rect = pygame.Rect(0.9*self.display.width, 0.1*self.display.height, 2*self.radius, 2*self.radius)
         proportion = time_elapsed / max_time
         angle = 2 * 3.14 * proportion
-        self.timer = pygame.draw.arc(self.display.screen, (255, 255 - int(255 * proportion), 255 - int(128 * proportion)), (700, 10, 50, 50), 0, angle, 5)
+        self.timer = pygame.draw.arc(self.display.screen, (255, 255, 255), arc_rect, 0, angle, 5)
         pass
 
 class Item(object):
@@ -125,26 +125,74 @@ class Item(object):
         self.object = dot
         return dot
 
+    # def arrow(self, arrow_dims: list, head_dir: str):
+    #     '''
+    #     Create an arrow item
+
+    #     Parameters:
+    #         arrow_dims (list): dimensions of the arrow
+    #     '''
+    #     self.length = arrow_dims[0]
+    #     self.width = arrow_dims[1]
+    #     self.head_height = arrow_dims[2]
+    #     self.head_dir = head_dir
+    #     arrow = pygame.Surface((2*self.length, 2*self.width), pygame.SRCALPHA)
+    #     # pygame.draw.polygon(arrow, self.color, [(0, 0), (self.length, self.width//2), (0, self.width)])
+    #     pygame.draw.polygon(arrow, self.color, [(0, self.width//2), (0,-self.width//2), (self.length,self.width//2), (self.length, -self.width//2)]) # Body Part
+    #     pygame.draw.polygon(arrow, self.color, [(self.length,self.head_height//2), (self.length, -self.head_height//2), (self.length + self.head_height, 0)]) # Head Part
+        
+    #     if (self.head_dir == 'right'):
+    #         self.object = arrow
+    #     else:
+    #         arrow = pygame.transform.flip(arrow, True, False)
+    #         self.object = arrow
+    #     return arrow
+
+    import pygame
+
     def arrow(self, arrow_dims: list, head_dir: str):
         '''
         Create an arrow item
 
         Parameters:
-            arrow_dims (list): dimensions of the arrow
+            arrow_dims (list): dimensions of the arrow (length, width, head_height)
+            head_dir (str): direction of the arrow head ('right' or 'left')
         '''
-        self.length = arrow_dims[0]
-        self.width = arrow_dims[1]
-        self.head_height = arrow_dims[2]
+        self.length = arrow_dims[0]          # Length of the arrow body
+        self.width = arrow_dims[1]           # Width of the arrow body
+        self.head_height = arrow_dims[2]     # Height of the arrow head
         self.head_dir = head_dir
-        arrow = pygame.Surface((self.length, self.width), pygame.SRCALPHA)
-        pygame.draw.polygon(arrow, self.color, [(0, 0), (self.length, self.width//2), (0, self.width)])
-        pygame.draw.polygon(arrow, self.color, [(self.length - self.head_height, 0), (self.length, self.width//2), (self.length - self.head_height, self.width)])
-        
-        if (self.head_dir == 'right'):
-            self.object = arrow
-        else:
+
+        # Surface to draw the arrow on, transparent background
+        arrow = pygame.Surface((self.length + self.head_height, self.width), pygame.SRCALPHA)
+
+        # Define points for the body of the arrow (a rectangle)
+        body_points = [
+            (0, self.width // 2 - self.width // 4),  # Top left of the body
+            (self.length, self.width // 2 - self.width // 4),  # Top right of the body
+            (self.length, self.width // 2 + self.width // 4),  # Bottom right of the body
+            (0, self.width // 2 + self.width // 4)   # Bottom left of the body
+        ]
+
+        # Define points for the head of the arrow (a triangle)
+        head_points = [
+            (self.length, self.width // 2 + self.head_height // 2),   # Bottom of the head
+            (self.length, self.width // 2 - self.head_height // 2),   # Top of the head
+            (self.length + self.head_height, self.width // 2)         # Tip of the head
+        ]
+
+        # Draw the arrow body
+        pygame.draw.polygon(arrow, self.color, body_points)
+
+        # Draw the arrow head
+        pygame.draw.polygon(arrow, self.color, head_points)
+
+        # Flip the arrow if needed
+        if self.head_dir == 'left':
             arrow = pygame.transform.flip(arrow, True, False)
-            self.object = arrow
+
+        # Store the arrow image
+        self.object = arrow
         return arrow
 
     def plus(self, plus_dims: list):
@@ -171,7 +219,7 @@ class Item(object):
         '''
         beep = None
         sample_rate = 44100
-        t = np.linspace(0, duration, sample_rate * duration)
+        t = np.linspace(0, duration, int(sample_rate * duration))
         beep = aplitude * np.sin(2 * np.pi * frequency*t)
 
         beep = beep.astype(np.int16)
@@ -179,7 +227,7 @@ class Item(object):
         return beep
 
 
-def write_and_pause(screen, text, time):
+def write_and_pause(screen, text, time, change_background = True, background_color = (0, 0, 0), text_color = (255, 255, 255), position = 'center'):
     '''
     Write text on the screen and pause for a specified time
 
@@ -188,10 +236,15 @@ def write_and_pause(screen, text, time):
         text (str): the text to display
         time (int): time(in SECONDS) to pause the program
     '''
-    screen.setColor((0, 0, 0))
+    if change_background:
+        screen.setColor(background_color)
+    if position == 'center':
+        loc_screen = (screen.width // 2, screen.height // 2)
+    elif position == 'top':
+        loc_screen = position
     font = pygame.font.Font(None, 74)
-    rendered_text = font.render(text, True, (255, 255, 255))
-    text_rect = rendered_text.get_rect(center=(screen.width / 2, screen.height / 2))
+    rendered_text = font.render(text, True, text_color)
+    text_rect = rendered_text.get_rect(loc_screen)
     screen.screen.blit(rendered_text, text_rect)
     pygame.display.flip()
     pause(time)

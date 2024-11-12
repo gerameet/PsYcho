@@ -4,6 +4,15 @@ text_pause_time = 2
 screen = Stage((255, 255, 255), width=1500, height=900)
 timer = Timer(screen, 50)
 screen.createWindow(1500, 900, 'Trial Run 1')
+
+parameters = {
+    'speed': 220,
+    'time': 2.5,
+    'color': (0, 0, 0),
+    'radius': 50,
+    'arrow_dims': [150, 90, 90, None]
+}
+
 pause(1)
 
 
@@ -18,10 +27,10 @@ def movement_direction(num_neutral, num_mixed):
 
     for subcase in cases_Movement_or_Direction:
         if subcase == 'Movement':
-            Neutral_obj.createScene(tasks=['Movement'], num_scenes= 1, speed=400, time=1, color=(0,0,0), position=[390, 290], radius=20, arrow_dims=[100, 20, 30, None])
+            Neutral_obj.createScene(tasks=['Movement'], num_scenes= 1, speed=parameters['speed'], time= parameters['time'], color= parameters['color'], radius= parameters['radius'], arrow_dims= parameters['arrow_dims'])
             pause(1)
         elif subcase == 'Direction':
-            Neutral_obj.createScene(tasks=['Direction'], num_scenes=1, speed=400, time=1, color=(0,0,0), position=[390, 290], radius=20, arrow_dims=[100, 20, 30, None], frequency=500, volume=10)
+            Neutral_obj.createScene(tasks=['Direction'], num_scenes=1, speed=parameters['speed'], time= parameters['time'], color= parameters['color'], radius= parameters['radius'], arrow_dims= parameters['arrow_dims'], frequency=500, volume=10)
             pause(0.5)
         else:
             print("Invalid case - (Needs to Be either Movement or Direction)!")
@@ -40,7 +49,7 @@ def movement_direction(num_neutral, num_mixed):
         else:
             print("Invalid case - (Needs to Be either Congruent or Conflict)!")
         
-        object.createScene(tasks=['Movement', 'Direction'],speed=400, time=1, color=(0,0,0), position=[390, 290], radius=20, arrow_dims=[100, 20, 30, None])
+        object.createScene(tasks=['Movement', 'Direction'],speed=400, time= parameters['time'], color= parameters['color'], radius= parameters['radius'], arrow_dims= parameters['arrow_dims'])
 
 
 def sound_movement(num_neutral, num_mixed):
@@ -54,10 +63,10 @@ def sound_movement(num_neutral, num_mixed):
 
     for subcase in cases_Movement_or_Sound:
         if subcase == 'Movement':
-            Neutral_obj.createScene(tasks=['Movement'], num_scenes= 1, speed=400, time=1, color=(0,0,0), position=[390, 290], radius=20, arrow_dims=[100, 20, 30, None])
+            Neutral_obj.createScene(tasks=['Movement'], num_scenes= 1, speed=400, time= parameters['time'], color= parameters['color'], radius= parameters['radius'], arrow_dims= parameters['arrow_dims'])
             pause(1)
         elif subcase == 'Sound':
-            Neutral_obj.createScene(tasks=['Sound'], num_scenes=1, speed=400, time=1, color=(0,0,0), position=[390, 290], radius=20, arrow_dims=[100, 20, 30, None], frequency=500, volume=10)
+            Neutral_obj.createScene(tasks=['Sound'], num_scenes=1, speed=400, time= parameters['time'], color= parameters['color'], radius= parameters['radius'], arrow_dims= parameters['arrow_dims'], frequency=500, volume=10)
             pause(0.5)
         else:
             print("Invalid case - (Needs to Be either Movement or Sound)!")
@@ -76,7 +85,7 @@ def sound_movement(num_neutral, num_mixed):
         else:
             print("Invalid case - (Needs to Be either Congruent or Conflict)!")
 
-        object.createScene(tasks=['Movement', 'Sound'],speed=400, time=1, color=(0,0,0), position=[390, 290], radius=20, arrow_dims=[100, 20, 30, None], frequency=500, volume=10)
+        object.createScene(tasks=['Movement', 'Sound'],speed=400, time= parameters['time'], color= parameters['color'], radius= parameters['radius'], arrow_dims= parameters['arrow_dims'], frequency=500, volume=10)
 
 
 def direction_sound(num_neutral, num_mixed):
@@ -90,10 +99,10 @@ def direction_sound(num_neutral, num_mixed):
 
     for subcase in cases_Direction_or_Sound:
         if subcase == 'Direction':
-            Neutral_obj.createScene(tasks=['Direction'], num_scenes= 1, speed=400, time=1, color=(0,0,0), position=[390, 290], radius=20, arrow_dims=[100, 20, 30, None])
+            Neutral_obj.createScene(tasks=['Direction'], num_scenes= 1, speed=400, time= parameters['time'], color= parameters['color'], radius= parameters['radius'], arrow_dims= parameters['arrow_dims'])
             pause(1)
         elif subcase == 'Sound':
-            Neutral_obj.createScene(tasks=['Sound'], num_scenes=1, speed=400, time=1, color=(0,0,0), position=[390, 290], radius=20, arrow_dims=[100, 20, 30, None], frequency=500, volume=10)
+            Neutral_obj.createScene(tasks=['Sound'], num_scenes=1, speed=400, time= parameters['time'], color= parameters['color'], radius= parameters['radius'], arrow_dims= parameters['arrow_dims'], frequency=500, volume=10)
             pause(0.5)
         else:
             print("Invalid case - (Needs to Be either Direction or Sound)!")
@@ -112,7 +121,7 @@ def direction_sound(num_neutral, num_mixed):
         else:
             print("Invalid case - (Needs to Be either Congruent or Conflict)!")
 
-        object.createScene(tasks=['Direction', 'Sound'],speed=400, time=1, color=(0,0,0), position=[390, 290], radius=20, arrow_dims=[100, 20, 30, None], frequency=500, volume=10)
+        object.createScene(tasks=['Direction', 'Sound'],speed=400, time= parameters['time'], color= parameters['color'], radius= parameters['radius'], arrow_dims= parameters['arrow_dims'], frequency=500, volume=10)
 
 
 def get_user_id():
