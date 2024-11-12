@@ -1,226 +1,151 @@
-from utils import *
-from scenes import *
+from tasks import *
+
+text_pause_time = 2
+screen = Stage((255, 255, 255), width=1500, height=900)
+timer = Timer(screen, 50)
+screen.createWindow(1500, 900, 'Trial Run 1')
+pause(1)
 
 
-def get_random_direction(n = 1):
-    """
-    Get a random direction (left/right)
-    """
-    return [np.random.choice(['left', 'right']) for _ in range(n)]
+def movement_direction(num_neutral, num_mixed):
 
-def get_random_task(tasks: list):
-    """
-    Get a random task from input list.
-    """
-    return np.random.choice(tasks)
+    write_and_pause(screen, 'Movement and Direction', text_pause_time)
+    
+    write_and_pause(screen, 'Neutral Mode', text_pause_time)
+    Neutral_obj = Neutral(screen, timer)
+    
+    cases_Movement_or_Direction = [np.random.choice(['Movement', 'Direction']) for i in range(num_neutral)]
 
-def get_random_position(window_width : int, window_height : int):
-    """
-    Get a random position within the window.
-    """
-    return [np.random.choice([int(0.33*window_width), int(0.67*window_width)]), np.random.choice([int(0.4*window_height), int(0.6*window_height)])]
+    for subcase in cases_Movement_or_Direction:
+        if subcase == 'Movement':
+            Neutral_obj.createScene(tasks=['Movement'], num_scenes= 1, speed=400, time=1, color=(0,0,0), position=[390, 290], radius=20, arrow_dims=[100, 20, 30, None])
+            pause(1)
+        elif subcase == 'Direction':
+            Neutral_obj.createScene(tasks=['Direction'], num_scenes=1, speed=400, time=1, color=(0,0,0), position=[390, 290], radius=20, arrow_dims=[100, 20, 30, None], frequency=500, volume=10)
+            pause(0.5)
+        else:
+            print("Invalid case - (Needs to Be either Movement or Direction)!")
 
+    write_and_pause(screen, 'Get ready to play ...', text_pause_time)
 
-
-class Conflict(object):
-    '''
-    Conflict class
-    '''
-    def __init__(self, screen: Stage, timer: Timer):
-        '''
-        Conflict class constructor
-        '''
-        self.display = screen
-        self.timer = timer
-        pass
-
-    def createScene(self, tasks: list = None, num_scenes: int = 1, 
-                    object_name: str = None, direction: str = None, speed: int = None,
-                    time: float = None, radius: int = None, arrow_dims: list = None, plus_dims: list = None,
-                    color: tuple = None, position: list = None, frequency: int = None, volume: int = None):
-        '''
-        Create a scene
-
-        Parameters:
-            tasks (list): list of tasks
-            arrow_dims (list): dimensions of the arrow (4 values , keep last none)
-            num_scenes (int): number of scenes
-        '''
-        movement_bgd_color = (220, 50, 50)
-        sound_bgd_color = (50, 220, 50)
-        direction_bgd_color = (50, 50, 220)
-
-
-        for i in range(num_scenes):
-            dir_0 = get_random_direction()[0]
-            dir_1 = 'right' if dir_0 == 'left' else 'left'
-            arrow_dims[3] = dir_1
-            task = get_random_task(tasks)
-            if (task == 'Movement'):
-                self.display.setColor(movement_bgd_color)
-            elif (task == 'Sound'):
-                self.display.setColor(sound_bgd_color)
-            elif (task == 'Direction'):
-                self.display.setColor(direction_bgd_color)
-            else:
-                print("Invalid task!")
-
-            if('Movement' in tasks and 'Sound' in tasks):
-                task = Movement(color, position=get_random_position(self.display.width, self.display.height), screen=self.display, timer=self.timer)
-                task.createObject(['beep', 'dot'], radius= radius, sound_dims=[frequency, time, volume])
-                task.move(direction=[dir_0,dir_1], speed=speed, time=time)
-            
-            elif ('Movement' in tasks and 'Direction' in tasks):
-                task = Movement(color, position=get_random_position(self.display.width, self.display.height), screen=self.display, timer=self.timer)
-                task.createObject(['arrow'], arrow_dims=arrow_dims)
-                task.move(direction=[dir_0], speed=speed, time=time)
-            
-            elif ('Sound' in tasks and 'Direction' in tasks):
-                task = Movement(color, position=get_random_position(self.display.width, self.display.height), screen=self.display, timer=self.timer)
-                task.createObject(['beep', 'arrow'], arrow_dims = arrow_dims ,sound_dims=[frequency, time, volume])
-                task.move(direction=[dir_0, dir_1], speed=0, time=time)
-
-            else:
-                print("Invalid task combination!")
-    pass
-
-
-class Congruent(object):
-    '''
-    Congruent class
-    '''
-    def __init__(self, screen: Stage, timer: Timer):
-        '''
-        Congruent class constructor
-        '''
-        self.display = screen
-        self.timer = timer
-        pass
-
-    def createScene(self, tasks: list = None, position: list = None, num_scenes: int = 1, 
-                    object_name: str = None, speed: int = None,
-                    time: float = None, radius: int = None, arrow_dims: list = None, plus_dims: list = None,
-                    color: tuple = None, frequency: int = None, volume: int = None):
+    cases_Movement_and_Direction = [np.random.choice(['Congruent', 'Conflict']) for i in range(num_mixed)]
+    congruent_obj = Congruent(screen, timer)
+    conflict_obj = Conflict(screen, timer)
+    
+    for i in range(len(cases_Movement_and_Direction)):
+        if cases_Movement_and_Direction[i] == 'Congruent':
+            object = congruent_obj
+        elif cases_Movement_and_Direction[i] == 'Conflict':
+            object = conflict_obj
+        else:
+            print("Invalid case - (Needs to Be either Congruent or Conflict)!")
         
+        object.createScene(tasks=['Movement', 'Direction'],speed=400, time=1, color=(0,0,0), position=[390, 290], radius=20, arrow_dims=[100, 20, 30, None])
 
-        '''
-        Create a scene
-
-        Parameters:
-            tasks (list): list of tasks
-            arrow_dims (list): dimensions of the arrow (4 values , keep last none)
-            num_scenes (int): number of scenes
-        '''
-        movement_bgd_color = (220, 50, 50)
-        sound_bgd_color = (50, 220, 50)
-        direction_bgd_color = (50, 50, 220)
-
-        for i in range(num_scenes):
-            direction = get_random_direction()[0]
-            arrow_dims[3] = direction
-            task = get_random_task(tasks)
-            if (task == 'Movement'):
-                self.display.setColor(movement_bgd_color)
-            elif (task == 'Sound'):
-                self.display.setColor(sound_bgd_color)
-            elif (task == 'Direction'):
-                self.display.setColor(direction_bgd_color)
-            else:
-                print("Invalid task!")
-
-            if('Movement' in tasks and 'Sound' in tasks):
-                task = Movement(color, position=get_random_position(self.display.width, self.display.height), screen=self.display, timer=self.timer)
-                task.createObject(['beep', 'dot'], radius= radius, sound_dims=[frequency, time, volume])
-                task.move(direction=[direction, direction], speed=speed, time=time)
-            
-            elif ('Movement' in tasks and 'Direction' in tasks):
-                task = Movement(color, position=get_random_position(self.display.width, self.display.height), screen=self.display, timer=self.timer)
-                task.createObject(['arrow'], arrow_dims=arrow_dims)
-                task.move(direction=[direction], speed=speed, time=time)
-            
-            elif ('Sound' in tasks and 'Direction' in tasks):
-                task = Movement(color, position=get_random_position(self.display.width, self.display.height), screen=self.display, timer=self.timer)
-                task.createObject(['beep', 'arrow'], arrow_dims = arrow_dims ,sound_dims=[frequency, time, volume])
-                task.move(direction=[direction, direction], speed=0, time=time)
-
-            else:
-                print("Invalid task combination!")
-    pass
+    write_and_pause(screen, 'End of Trial Run 1', text_pause_time)
 
 
-class Neutral(object):
-    '''
-    Neutral class
-    '''
-    def __init__(self, screen: Stage, timer: Timer):
-        '''
-        Neutral class constructor
-        '''
-        self.display = screen
-        self.timer = timer
-        pass
-    def createScene(self, tasks: list = None, num_scenes: int = None, 
-                    object_name: list = None, direction: list = None, speed: int = None,
-                    time: float = None, radius: int = None, arrow_dims: list = None, plus_dims: list = None,
-                    color: tuple = None, position: list = None, frequency: int = None, volume: int = None):
-        '''
-        Create a scene
+def sound_movement(num_neutral, num_mixed):
 
-        Parameters:
-            tasks (list): list of tasks
-            num_scenes (int): number of scenes
-            object_name (list): list of object names
-            direction (list): list of directions
-            speed (int): speed of the object
-            time (float): time of the object
-            radius (int): radius of the object
-            arrow_dims (list): dimensions of the arrow
-            plus_dims (list): dimensions of the plus
-            color (tuple): color of the object
-            position (list): position of the object
-            frequency (int): frequency of the sound
-            volume (int): volume of the sound
-        '''
-        movement_bgd_color = (220, 50, 50)
-        sound_bgd_color = (50, 220, 50)
-        direction_bgd_color = (50, 50, 220)
+    write_and_pause(screen, 'Movement and Sound', text_pause_time)
+    
+    write_and_pause(screen, 'Neutral Mode', text_pause_time)
+    Neutral_obj = Neutral(screen, timer)
+    
+    cases_Movement_or_Sound = [np.random.choice(['Movement', 'Sound']) for i in range(num_neutral)]
 
-        task_map = {
-            'Movement': 'dot',
-            'Sound': 'beep',
-            'Direction': 'arrow'
-        }
+    for subcase in cases_Movement_or_Sound:
+        if subcase == 'Movement':
+            Neutral_obj.createScene(tasks=['Movement'], num_scenes= 1, speed=400, time=1, color=(0,0,0), position=[390, 290], radius=20, arrow_dims=[100, 20, 30, None])
+            pause(1)
+        elif subcase == 'Sound':
+            Neutral_obj.createScene(tasks=['Sound'], num_scenes=1, speed=400, time=1, color=(0,0,0), position=[390, 290], radius=20, arrow_dims=[100, 20, 30, None], frequency=500, volume=10)
+            pause(0.5)
+        else:
+            print("Invalid case - (Needs to Be either Movement or Sound)!")
 
-        for i in range(num_scenes):
-            dir = get_random_direction()[0]
-            arrow_dims[3] = dir
-            task_name = tasks[0]
-            if (task_name == 'Movement'):
-                self.display.setColor(movement_bgd_color)
-            elif (task_name == 'Sound'):
-                self.display.setColor(sound_bgd_color)
-            elif (task_name == 'Direction'):
-                self.display.setColor(direction_bgd_color)
-            else:
-                print(f"Invalid task!{i}")
-            task = Movement(color, position=get_random_position(self.display.width, self.display.height), screen=self.display, timer=self.timer)
-            task.createObject(task_map[task_name], radius= radius, arrow_dims=arrow_dims, plus_dims=plus_dims, sound_dims=[frequency, time, volume])
-            task.move(direction=get_random_direction(), speed= 0 if task_name == 'Direction' else speed, time=time)
-        pass
+    write_and_pause(screen, 'Get ready to play ...', text_pause_time)
+
+    cases_Movement_and_Sound = [np.random.choice(['Congruent', 'Conflict']) for i in range(num_mixed)]
+    congruent_obj = Congruent(screen, timer)
+    conflict_obj = Conflict(screen, timer)
+    
+    for i in range(len(cases_Movement_and_Sound)):
+        if cases_Movement_and_Sound[i] == 'Congruent':
+            object = congruent_obj
+        elif cases_Movement_and_Sound[i] == 'Conflict':
+            object = conflict_obj
+        else:
+            print("Invalid case - (Needs to Be either Congruent or Conflict)!")
+
+        object.createScene(tasks=['Movement', 'Sound'],speed=400, time=1, color=(0,0,0), position=[390, 290], radius=20, arrow_dims=[100, 20, 30, None], frequency=500, volume=10)
+
+    write_and_pause(screen, 'End of Trial Run 1', text_pause_time)
 
 
-# con = Conflict(screen, timer)
-# con.createScene(tasks=['Direction','Sound'], num_scenes=5, speed=400, time=2, color=(0,0,0), position=[390, 290], radius = 50, frequency=500, volume=10, arrow_dims=[100, 20, 30, None])
-# con.createScene(tasks=['Movement','Sound'], num_scenes=5, speed=400, time=2, color=(0,0,0), position=[390, 290], radius = 50, frequency=500, volume=10, arrow_dims=[100, 20, 30, None])
-# con.createScene(tasks=['Movement','Direction'], num_scenes=5, speed=400, time=2, color=(0,0,0), position=[390, 290], radius = 50, frequency=500, volume=10, arrow_dims=[100, 20, 30, None])
+def direction_sound(num_neutral, num_mixed):
 
-# cong = Congruent(screen, timer)
-# cong.createScene(tasks=['Direction','Sound'], num_scenes=5, speed=400, time=2, color=(0,0,0), position=[390, 290], radius = 50, frequency=500, volume=10, arrow_dims=[100, 20, 30, None])
-# cong.createScene(tasks=['Movement','Sound'], num_scenes=5, speed=400, time=2, color=(0,0,0), position=[390, 290], radius = 50, frequency=500, volume=10, arrow_dims=[100, 20, 30, None])
-# cong.createScene(tasks=['Movement','Direction'], num_scenes=5, speed=400, time=2, color=(0,0,0), position=[390, 290], radius = 50, frequency=500, volume=10, arrow_dims=[100, 20, 30, None])
+    write_and_pause(screen, 'Direction and Sound', text_pause_time)
+    
+    write_and_pause(screen, 'Neutral Mode', text_pause_time)
+    Neutral_obj = Neutral(screen, timer)
 
-# Neutral_obj = Neutral(screen, timer)
-# Neutral_obj.createScene(tasks=['Movement'], num_scenes=5, speed=400, time=1, color=(0,0,0), position=[390, 290], radius=20, arrow_dims=[100, 20, 30, None])
-# Neutral_obj.createScene(tasks=['Direction'], num_scenes=5, speed=400, time=1, color=(0,0,0), position=[390, 290], radius=20, arrow_dims=[100, 20, 30, None], frequency=500, volume=10)
-# Neutral_obj.createScene(tasks=['Sound'], num_scenes=5, speed=400, time=1, color=(0,0,0), position=[390, 290], radius=20, arrow_dims=[100, 20, 30, None], frequency=500, volume=10)
+    cases_Direction_or_Sound = [np.random.choice(['Direction', 'Sound']) for i in range(num_neutral)]
 
+    for subcase in cases_Direction_or_Sound:
+        if subcase == 'Direction':
+            Neutral_obj.createScene(tasks=['Direction'], num_scenes= 1, speed=400, time=1, color=(0,0,0), position=[390, 290], radius=20, arrow_dims=[100, 20, 30, None])
+            pause(1)
+        elif subcase == 'Sound':
+            Neutral_obj.createScene(tasks=['Sound'], num_scenes=1, speed=400, time=1, color=(0,0,0), position=[390, 290], radius=20, arrow_dims=[100, 20, 30, None], frequency=500, volume=10)
+            pause(0.5)
+        else:
+            print("Invalid case - (Needs to Be either Direction or Sound)!")
+
+    write_and_pause(screen, 'Get ready to play ...', text_pause_time)
+
+    cases_Direction_and_Sound = [np.random.choice(['Congruent', 'Conflict']) for i in range(num_mixed)]
+    congruent_obj = Congruent(screen, timer)
+    conflict_obj = Conflict(screen, timer)
+    
+    for i in range(len(cases_Direction_and_Sound)):
+        if cases_Direction_and_Sound[i] == 'Congruent':
+            object = congruent_obj
+        elif cases_Direction_and_Sound[i] == 'Conflict':
+            object = conflict_obj
+        else:
+            print("Invalid case - (Needs to Be either Congruent or Conflict)!")
+
+        object.createScene(tasks=['Direction', 'Sound'],speed=400, time=1, color=(0,0,0), position=[390, 290], radius=20, arrow_dims=[100, 20, 30, None], frequency=500, volume=10)
+
+
+def get_user_id():
+    # starts with 0 written in the file
+    with open('user_ids.txt', 'r') as file:
+        lines = file.readlines()
+        last_line = lines[-1]
+        last_id = int(last_line.strip())
+        new_id = last_id + 1
+    # write new id to the file
+    with open('user_ids.txt', 'a') as file:
+        file.write(f'{new_id}\n')
+    return new_id
+
+
+def driver():
+    with open('data.csv', 'w') as file:
+        file.write('polarity,todotask,othertask,correct,total_time,key_pressed,time_taken\n')
+
+    movement_direction(4, 8)
+    sound_movement(4, 8)
+    direction_sound(4, 8)
+
+    write_and_pause(screen, 'End of Trial Run 1', text_pause_time)
+
+    user_id = get_user_id()
+    with open('data.csv', 'r') as file:
+        data = file.read()
+    with open(f'data/{user_id}.csv', 'w') as file:
+        file.write(data)
+
+driver()

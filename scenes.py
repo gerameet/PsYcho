@@ -84,12 +84,31 @@ class Movement(object):
 
         if (self.is_beep):
             self.beep.play(direction[0], self.is_beep)
+        
+        key_pressed = "none"
+        # default time taken is set to total time of the scene
+        time_taken = time
 
         start_time = pygame.time.get_ticks()
         while True:
             elapsed_time = (pygame.time.get_ticks() - start_time) / 1000.0
             if elapsed_time > time:
                 break
+            
+            # Check for key press
+            for event in pygame.event.get():
+                if event.type == pygame.KEYDOWN:
+                    if event.key == pygame.K_LEFT:
+                        key_pressed = "left"
+                        time_taken = elapsed_time
+                        break
+                    elif event.key == pygame.K_RIGHT:
+                        key_pressed = "right"
+                        time_taken = elapsed_time
+                        break
+            if key_pressed in ["left", "right"]:
+                break
+
             progress = elapsed_time / time
 
             current_x = self.start_pos_x + progress * (self.end_pos_x - self.start_pos_x)
@@ -110,6 +129,9 @@ class Movement(object):
         if ('dot' in self.mode or 'plus' in self.mode or 'arrow' in self.mode):
             self.display.screen.blit(self.object[-1], self.position)
         pygame.display.update()
+
+        with open("data.csv", "a") as file:
+            file.write(f"{key_pressed},{time_taken}\n")
 
         pass
 
