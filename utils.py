@@ -240,11 +240,11 @@ def write_and_pause(screen, text, time, change_background = True, background_col
         screen.setColor(background_color)
     if position == 'center':
         loc_screen = (screen.width // 2, screen.height // 2)
-    elif position == 'top':
+    elif isinstance(position,tuple):
         loc_screen = position
     font = pygame.font.Font(None, 74)
     rendered_text = font.render(text, True, text_color)
-    text_rect = rendered_text.get_rect(loc_screen)
+    text_rect = rendered_text.get_rect(center = loc_screen)
     screen.screen.blit(rendered_text, text_rect)
     pygame.display.flip()
     pause(time)
