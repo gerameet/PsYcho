@@ -107,6 +107,8 @@ class Movement(object):
                         time_taken = elapsed_time
                         break
             if key_pressed in ["left", "right"]:
+                if(self.is_beep):
+                    self.beep.stop_playing()
                 break
 
             progress = elapsed_time / time
@@ -119,7 +121,7 @@ class Movement(object):
             if ('dot' in self.mode or 'plus' in self.mode or 'arrow' in self.mode):
                 self.display.screen.blit(self.object[-1], self.position)
 
-            self.timer.draw_timer_ring(elapsed_time, time)
+            # self.timer.draw_timer_ring(elapsed_time, time)
 
             pygame.display.update()
             pygame.display.flip()
@@ -231,5 +233,12 @@ class Sound(object):
                 pygame.display.flip()
                 self.display.clock.tick(60)
             pygame.display.update()
+
+    def stop_playing(self):
+        '''
+        Stops playing the sound
+        '''
+        pygame.mixer.stop()
+        pass
 
 

@@ -2,6 +2,9 @@ from utils import *
 from scenes import *
 
 
+
+
+
 def get_random_direction(n = 1):
     """
     Get a random direction (left/right)
@@ -37,7 +40,7 @@ class Conflict(object):
     def createScene(self, tasks: list = None, num_scenes: int = 1, 
                     object_name: str = None, direction: str = None, speed: int = None,
                     time: float = None, radius: int = None, arrow_dims: list = None, plus_dims: list = None,
-                    color: tuple = None, position: list = None, frequency: int = None, volume: int = None):
+                    color: tuple = None, position: list = None, frequency: int = None, volume: int = None, is_block: bool = False):
         '''
         Create a scene
 
@@ -50,11 +53,15 @@ class Conflict(object):
         sound_bgd_color = (50, 220, 50)
         direction_bgd_color = (50, 50, 220)
 
+
         for i in range(num_scenes):
             dir_0 = get_random_direction()[0]
             dir_1 = 'right' if dir_0 == 'left' else 'left'
             arrow_dims[3] = dir_1
-            to_do_task = get_random_task(tasks)
+            if (is_block):
+                to_do_task  = tasks[0]
+            else:
+                to_do_task = get_random_task(tasks)
             if (to_do_task == 'Movement'):
                 self.display.setColor(movement_bgd_color)
             elif (to_do_task == 'Sound'):
@@ -104,7 +111,7 @@ class Congruent(object):
     def createScene(self, tasks: list = None, position: list = None, num_scenes: int = 1, 
                     object_name: str = None, speed: int = None,
                     time: float = None, radius: int = None, arrow_dims: list = None, plus_dims: list = None,
-                    color: tuple = None, frequency: int = None, volume: int = None):
+                    color: tuple = None, frequency: int = None, volume: int = None, is_block: bool = False):
         
 
         '''
@@ -122,7 +129,10 @@ class Congruent(object):
         for i in range(num_scenes):
             direction = get_random_direction()[0]
             arrow_dims[3] = direction
-            to_do_task = get_random_task(tasks)
+            if (is_block):
+                to_do_task  = tasks[0]
+            else:
+                to_do_task = get_random_task(tasks)
             if (to_do_task == 'Movement'):
                 self.display.setColor(movement_bgd_color)
             elif (to_do_task == 'Sound'):
