@@ -1,10 +1,6 @@
 from utils import *
 from scenes import *
 
-
-
-
-
 def get_random_direction(n = 1):
     """
     Get a random direction (left/right)

@@ -148,7 +148,6 @@ class Item(object):
     #         self.object = arrow
     #     return arrow
 
-    import pygame
 
     def arrow(self, arrow_dims: list, head_dir: str):
         '''

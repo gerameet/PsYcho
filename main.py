@@ -1,12 +1,14 @@
 from tasks import *
 
+screen_width = 1700
+screen_height = 900
 text_pause_time = 2
-screen = Stage((255, 255, 255), width=1500, height=900)
+screen = Stage((255, 255, 255), width=screen_width, height=screen_height)
 timer = Timer(screen, 50)
-screen.createWindow(1500, 900, 'Trial Run 1')
+screen.createWindow(screen_width, screen_height, 'Trial Run 1')
 
 parameters = {
-    'speed': 220,
+    'speed': 250,
     'time': 2.5,
     'color': (0, 0, 0),
     'radius': 50,
@@ -19,7 +21,7 @@ pause(1)
 def movement_direction(num_neutral, num_block, num_mixed):
 
     write_and_pause(screen, 'Movement and Direction', text_pause_time)
-    
+
     write_and_pause(screen, 'Neutral Mode', text_pause_time)
     Neutral_obj = Neutral(screen, timer)
 
@@ -71,7 +73,7 @@ def movement_direction(num_neutral, num_block, num_mixed):
             print("Invalid case - (Needs to Be either Congruent or Conflict)!")
         choice_mat[int(choice_array_mixed[i][0])][int(choice_array_mixed[i][1])] -= 1
         
-        object.createScene(is_block=True, tasks=task_arr,speed=400, time= parameters['time'], color= parameters['color'], radius= parameters['radius'], arrow_dims= parameters['arrow_dims'])
+        object.createScene(is_block=True, tasks=task_arr,speed=parameters['speed'], time= parameters['time'], color= parameters['color'], radius= parameters['radius'], arrow_dims= parameters['arrow_dims'])
 
 
 def sound_movement(num_neutral, num_block, num_mixed):
@@ -82,10 +84,10 @@ def sound_movement(num_neutral, num_block, num_mixed):
         Neutral_obj = Neutral(screen, timer)
     
         write_and_pause(screen, 'Sound', text_pause_time)
-        Neutral_obj.createScene(tasks=['Sound'], num_scenes= num_neutral, speed=400, time= parameters['time'], color= parameters['color'], radius= parameters['radius'], arrow_dims= parameters['arrow_dims'], frequency=500, volume=10)
+        Neutral_obj.createScene(tasks=['Sound'], num_scenes= num_neutral, speed=parameters['speed'], time= parameters['time'], color= parameters['color'], radius= parameters['radius'], arrow_dims= parameters['arrow_dims'], frequency=500, volume=10)
         
         write_and_pause(screen, 'Movement', text_pause_time)
-        Neutral_obj.createScene(tasks=['Movement'], num_scenes=num_neutral, speed=400, time= parameters['time'], color= parameters['color'], radius= parameters['radius'], arrow_dims= parameters['arrow_dims'])
+        Neutral_obj.createScene(tasks=['Movement'], num_scenes=num_neutral, speed=parameters['speed'], time= parameters['time'], color= parameters['color'], radius= parameters['radius'], arrow_dims= parameters['arrow_dims'])
             
         write_and_pause(screen, 'Mixed Cases - BLOCK', text_pause_time)
         
@@ -97,10 +99,10 @@ def sound_movement(num_neutral, num_block, num_mixed):
             for i in range(len(choice_array)):
                 if choice_array[i] == 'Conflict':
                     Conflict_obj = Conflict(screen, timer)
-                    Conflict_obj.createScene(is_block = True, tasks=task_arr, speed=400, time= parameters['time'], color= parameters['color'], radius= parameters['radius'], arrow_dims= parameters['arrow_dims'], frequency=500, volume=10)
+                    Conflict_obj.createScene(is_block = True, tasks=task_arr, speed=parameters['speed'], time= parameters['time'], color= parameters['color'], radius= parameters['radius'], arrow_dims= parameters['arrow_dims'], frequency=500, volume=10)
                 elif choice_array[i] == 'Congruent':
                     Congruent_obj = Congruent(screen, timer)
-                    Congruent_obj.createScene(is_block = True, tasks=task_arr, speed=400, time= parameters['time'], color= parameters['color'], radius= parameters['radius'], arrow_dims= parameters['arrow_dims'], frequency=500, volume=10)
+                    Congruent_obj.createScene(is_block = True, tasks=task_arr, speed=parameters['speed'], time= parameters['time'], color= parameters['color'], radius= parameters['radius'], arrow_dims= parameters['arrow_dims'], frequency=500, volume=10)
                 else:
                     print("Invalid case - (Needs to Be either Congruent or Conflict)!")
     
@@ -129,7 +131,7 @@ def sound_movement(num_neutral, num_block, num_mixed):
             else:
                 print("Invalid case - (Needs to Be either Congruent or Conflict)!")
             choice_mat[int(choice_array_mixed[i][0])][int(choice_array_mixed[i][1])] -= 1
-            object.createScene(is_block=True, tasks=task_arr, speed=400, time= parameters['time'], color= parameters['color'], radius= parameters['radius'], arrow_dims= parameters['arrow_dims'], frequency=500, volume=10)
+            object.createScene(is_block=True, tasks=task_arr, speed=parameters['speed'], time= parameters['time'], color= parameters['color'], radius= parameters['radius'], arrow_dims= parameters['arrow_dims'], frequency=500, volume=10)
 
 
 def direction_sound(num_neutral, num_block, num_mixed):
@@ -187,7 +189,7 @@ def direction_sound(num_neutral, num_block, num_mixed):
                 else:
                     print("Invalid case - (Needs to Be either Congruent or Conflict)!")
                 choice_mat[int(choice_array_mixed[i][0])][int(choice_array_mixed[i][1])] -= 1
-                object.createScene(is_block=True, tasks=task_arr, speed=400, time= parameters['time'], color= parameters['color'], radius= parameters['radius'], arrow_dims= parameters['arrow_dims'], frequency=500, volume=10)
+                object.createScene(is_block=True, tasks=task_arr, speed=parameters['speed'], time= parameters['time'], color= parameters['color'], radius= parameters['radius'], arrow_dims= parameters['arrow_dims'], frequency=500, volume=10)
 
 
 def get_user_id():
@@ -207,9 +209,12 @@ def driver():
     with open('data.csv', 'w') as file:
         file.write('polarity,todotask,othertask,correct,total_time,key_pressed,time_taken\n')
 
-    movement_direction(5, 5, 5)
-    sound_movement(5, 5, 5)
-    direction_sound(5, 5, 5)
+    no_use_obj = Neutral(screen, timer)
+
+    write_and_pause(screen, 'Welcome !!', text_pause_time)
+    movement_direction(5, 0, 0)
+    # sound_movement(5, 5, 5)
+    # direction_sound(5, 5, 5)
 
     write_and_pause(screen, 'Thank you for participating :)', text_pause_time)
 
