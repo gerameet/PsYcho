@@ -1,5 +1,7 @@
 from tasks import *
 
+from analysis import *
+
 screen_width = 1700
 screen_height = 900
 text_pause_time = 2
@@ -212,10 +214,10 @@ def driver():
     no_use_obj = Neutral(screen, timer)
 
     write_and_pause(screen, 'Welcome !!', text_pause_time)
-    movement_direction(5, 0, 0)
-    # sound_movement(5, 5, 5)
-    # direction_sound(5, 5, 5)
-
+    movement_direction(10, 5, 5)
+    sound_movement(10, 5, 5)
+    direction_sound(10, 5, 5)
+    
     write_and_pause(screen, 'Thank you for participating :)', text_pause_time)
 
     user_id = get_user_id()
@@ -223,5 +225,10 @@ def driver():
         data = file.read()
     with open(f'data/{user_id}.csv', 'w') as file:
         file.write(data)
+
+    user_perf = UserPerformance(f'data/{user_id}.csv')
+    final_score = user_perf.get_accuracy_and_time()
+
+    print("\n\n", final_score, "\n\n")
 
 driver()

@@ -93,6 +93,7 @@ class Movement(object):
         while True:
             elapsed_time = (pygame.time.get_ticks() - start_time) / 1000.0
             if elapsed_time > time:
+                pause(0.25)
                 break
             
             # Check for key press
@@ -109,6 +110,7 @@ class Movement(object):
             if key_pressed in ["left", "right"]:
                 if(self.is_beep):
                     self.beep.stop_playing()
+                pause(0.25)
                 break
 
             progress = elapsed_time / time
