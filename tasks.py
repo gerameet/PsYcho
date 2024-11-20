@@ -53,7 +53,7 @@ class Conflict(object):
         for i in range(num_scenes):
             dir_0 = get_random_direction()[0]
             dir_1 = 'right' if dir_0 == 'left' else 'left'
-            arrow_dims[3] = dir_1
+            arrow_dims[3] = dir_0 if tasks[0] == 'Direction' else dir_1
             if (is_block):
                 to_do_task  = tasks[0]
             else:
@@ -75,7 +75,10 @@ class Conflict(object):
             if('Movement' in tasks and 'Sound' in tasks):
                 task = Movement(color, position=get_random_position(self.display.width, self.display.height), screen=self.display, timer=self.timer)
                 task.createObject(['beep', 'dot'], radius= radius, sound_dims=[frequency, time, volume])
-                task.move(direction=[dir_0,dir_1], speed=speed, time=time)
+                if to_do_task == 'Sound':
+                    task.move(direction=[dir_0,dir_1], speed=speed, time=time)
+                else:
+                    task.move(direction=[dir_1,dir_0], speed=speed, time=time)
             
             elif ('Movement' in tasks and 'Direction' in tasks):
                 task = Movement(color, position=get_random_position(self.display.width, self.display.height), screen=self.display, timer=self.timer)
@@ -85,7 +88,10 @@ class Conflict(object):
             elif ('Sound' in tasks and 'Direction' in tasks):
                 task = Movement(color, position=get_random_position(self.display.width, self.display.height), screen=self.display, timer=self.timer)
                 task.createObject(['beep', 'arrow'], arrow_dims = arrow_dims ,sound_dims=[frequency, time, volume])
-                task.move(direction=[dir_0, dir_1], speed=0, time=time)
+                if to_do_task == 'Sound':
+                    task.move(direction=[dir_0,dir_1], speed=0, time=time)
+                else:
+                    task.move(direction=[dir_1,dir_0], speed=0, time=time)
 
             else:
                 print("Invalid task combination!")
@@ -209,8 +215,8 @@ class Neutral(object):
         }
 
         for i in range(num_scenes):
-            dir = get_random_direction()[0]
-            arrow_dims[3] = dir
+            dir = get_random_direction()
+            arrow_dims[3] = dir[0]
             task_name = tasks[0]
             if (task_name == 'Movement'):
                 self.display.setColor(movement_bgd_color)
@@ -222,7 +228,6 @@ class Neutral(object):
                 print(f"Invalid task!{i}")
             task = Movement(color, position=get_random_position(self.display.width, self.display.height), screen=self.display, timer=self.timer)
             task.createObject(task_map[task_name], radius= radius, arrow_dims=arrow_dims, plus_dims=plus_dims, sound_dims=[frequency, time, volume])
-            dir = get_random_direction()
             with open("data.csv", 'a') as f:
                 f.write(f"neutral,{task_name},{task_name},{dir[0]},{time},")
             task.move(direction=dir, speed= 0 if task_name == 'Direction' else speed, time=time)

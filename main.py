@@ -227,8 +227,11 @@ def driver():
         file.write(data)
 
     user_perf = UserPerformance(f'data/{user_id}.csv')
-    final_score = user_perf.get_accuracy_and_time()
+    final_score, accuracy, time_taken = user_perf.get_accuracy_and_time()
 
-    print("\n\n", final_score, "\n\n")
+    with open('results/individual_scores.csv', 'a') as file:
+        file.write(f'{user_id},{accuracy},{time_taken}\n')
+
+    print("\n\n",final_score,"\n\n")
 
 driver()

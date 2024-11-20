@@ -47,7 +47,7 @@ class UserPerformance:
         accuracy = round(accuracy, 2)
 
         final_score = f"Your accuracy is " + str(accuracy) + "\nYou took " + str(time_taken) + "/" + str(total_time) + " seconds to complete the task."
-        return final_score
+        return final_score, accuracy, time_taken
     
     def get_task_data(self):
         """
@@ -237,7 +237,7 @@ class PerformanceMetrics:
         # each row represents a task (for eg Direction and Movement, Movement and Sound, Direction and Sound)
         # each column is a performance measure (time, accuracy, score)
         # it is a 3x3 grid
-        
+
         print("\n\n")
         print(results_mov_dir)
         print("\n\n")
