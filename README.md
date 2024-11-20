@@ -41,11 +41,12 @@ Description of files:
 5. `data` folder will contain the response of each participant stored as `x.csv` (`x` is the **UserID** of the participant).
 6. `user_ids.txt` contains the UserIDs of the participants as and when they register for the experiment. The IDs are read from here while creating the response files.
 7. `data.csv` is a temporary file that gets created while the participant is doing the experiment. It gets overwritten everytime a new participant starts the experiment.
+8. `analysis.py` contains the functionns for getting the participant scores. The functions provide the user with a choice to either get per-participant scores or analyse group statistics.
 
 Note that `requirements.txt` contains the required libraries and their versions compatible with the current set up.
 
 
-(*Note: This repo is under construction and is therefore is subject to changes in the furture.*)
+(*Note: This repo is under construction and is therefore is subject to changes in the future.*)
 
 
 
