@@ -83,7 +83,10 @@ class Conflict(object):
             elif ('Movement' in tasks and 'Direction' in tasks):
                 task = Movement(color, position=get_random_position(self.display.width, self.display.height), screen=self.display, timer=self.timer)
                 task.createObject(['arrow'], arrow_dims=arrow_dims)
-                task.move(direction=[dir_0], speed=speed, time=time)
+                if to_do_task == 'Movement':
+                    task.move(direction=[dir_0], speed=speed, time=time)
+                else:
+                    task.move(direction=[dir_1], speed=speed, time=time)
             
             elif ('Sound' in tasks and 'Direction' in tasks):
                 task = Movement(color, position=get_random_position(self.display.width, self.display.height), screen=self.display, timer=self.timer)

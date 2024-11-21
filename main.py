@@ -214,6 +214,7 @@ def driver():
     no_use_obj = Neutral(screen, timer)
 
     write_and_pause(screen, 'Welcome !!', text_pause_time)
+
     movement_direction(10, 5, 5)
     sound_movement(10, 5, 5)
     direction_sound(10, 5, 5)

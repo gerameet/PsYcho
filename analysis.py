@@ -244,5 +244,6 @@ class PerformanceMetrics:
         print(results_mov_sound)
         print("\n\n")
         print(results_dir_sound)
+        print("\n\n")
 
         
