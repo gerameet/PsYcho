@@ -206,6 +206,14 @@ def get_user_id():
         file.write(f'{new_id}\n')
     return new_id
 
+def randomize_order_of_tasks():
+    """
+    Randomizes the order of tasks for a user
+    """
+    list_of_tasks = ['mov_dir', 'sound_mov', 'dir_sound']
+    np.random.shuffle(list_of_tasks)
+    return list_of_tasks
+
 
 def driver():
     with open('data.csv', 'w') as file:
@@ -215,9 +223,16 @@ def driver():
 
     write_and_pause(screen, 'Welcome !!', text_pause_time)
 
-    movement_direction(10, 5, 5)
-    sound_movement(10, 5, 5)
-    direction_sound(10, 5, 5)
+    order_of_tasks = randomize_order_of_tasks()
+    for task in order_of_tasks:
+        if task == 'mov_dir':
+            movement_direction(10, 5, 5)
+        elif task == 'sound_mov':
+            sound_movement(10, 5, 5)
+        elif task == 'dir_sound':
+            direction_sound(10, 5, 5)
+        else:
+            print("Invalid task")
     
     write_and_pause(screen, 'Thank you for participating :)', text_pause_time)
 
