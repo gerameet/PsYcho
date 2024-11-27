@@ -304,13 +304,13 @@ class PerformanceMetrics:
         plt.subplot(3, 3, 1)
         plt.plot(polarities, mov_dir_times[0], label="Movement")
         plt.plot(polarities, mov_dir_times[1], label="Direction")
-        plt.title("Time")
+        plt.title("Time(s)")
         plt.legend()
 
         plt.subplot(3, 3, 2)
         plt.plot(polarities, mov_dir_accuracies[0], label="Movement")
         plt.plot(polarities, mov_dir_accuracies[1], label="Direction")
-        plt.title("Accuracy")
+        plt.title("Accuracy(%)")
         plt.legend()
         
         plt.subplot(3, 3, 3)
@@ -323,13 +323,13 @@ class PerformanceMetrics:
         plt.subplot(3, 3, 4)
         plt.plot(polarities, mov_sound_times[0], label="Movement")
         plt.plot(polarities, mov_sound_times[1], label="Sound")
-        plt.title("Time")
+        plt.title("Time(s)")
         plt.legend()
 
         plt.subplot(3, 3, 5)
         plt.plot(polarities, mov_sound_accuracies[0], label="Movement")
         plt.plot(polarities, mov_sound_accuracies[1], label="Sound")
-        plt.title("Accuracy")
+        plt.title("Accuracy(%)")
         plt.legend()
 
         plt.subplot(3, 3, 6)
@@ -342,13 +342,13 @@ class PerformanceMetrics:
         plt.subplot(3, 3, 7)
         plt.plot(polarities, dir_sound_times[0], label="Direction")
         plt.plot(polarities, dir_sound_times[1], label="Sound")
-        plt.title("Time")
+        plt.title("Time(s)")
         plt.legend()
 
         plt.subplot(3, 3, 8)
         plt.plot(polarities, dir_sound_accuracies[0], label="Direction")
         plt.plot(polarities, dir_sound_accuracies[1], label="Sound")
-        plt.title("Accuracy")
+        plt.title("Accuracy(%)")
         plt.legend()
 
         plt.subplot(3, 3, 9)
