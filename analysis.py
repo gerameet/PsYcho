@@ -229,21 +229,100 @@ class PerformanceMetrics:
             results_dir_sound[polarity] = task_analyser.get_polarity_performance(polarity)
 
         return results_mov_dir, results_mov_sound, results_dir_sound
+
+    def get_distribution_for_plot(self, metrics, tasks, results):
+        """
+        this function returns the distribution of the results for a task
+        """
+        polarities = ("neutral", "congruent", "conflict")
+
+        times = [results[polarity][metrics[0]] for polarity in polarities]
+        time_task_1 = [time[tasks[0]] for time in times]
+        time_task_2 = [time[tasks[1]] for time in times]
+        times = [time_task_1, time_task_2]
+
+        accuracies = [results[polarity][metrics[1]] for polarity in polarities]
+        accuracies_task_1 = [accuracy[tasks[0]] for accuracy in accuracies]
+        accuracies_task_2 = [accuracy[tasks[1]] for accuracy in accuracies]
+        accuracies = [accuracies_task_1, accuracies_task_2]
+
+        scores = [results[polarity][metrics[2]] for polarity in polarities]
+        scores_task_1 = [score[tasks[0]] for score in scores]
+        scores_task_2 = [score[tasks[1]] for score in scores]
+        scores = [scores_task_1, scores_task_2]
+
+        return times, accuracies, scores
     
     def plot_results(self):
         results_mov_dir, results_mov_sound, results_dir_sound = self.get_results_task_wise()
 
-        # on x axis we have neutral, congruent and conflict for each task
-        # each row represents a task (for eg Direction and Movement, Movement and Sound, Direction and Sound)
-        # each column is a performance measure (time, accuracy, score)
-        # it is a 3x3 grid
+        tasks = (["Movement", "Direction"], ["Movement", "Sound"], ["Direction","Sound"])
+        polarities = ("neutral", "congruent", "conflict")
+        metrics = ("avg_reaction_time", "accuracy", "score")
 
-        print("\n\n")
-        print(results_mov_dir)
-        print("\n\n")
-        print(results_mov_sound)
-        print("\n\n")
-        print(results_dir_sound)
-        print("\n\n")
+        mov_dir_times, mov_dir_accuracies, mov_dir_scores = self.get_distribution_for_plot(metrics, tasks[0], results_mov_dir)
+        mov_sound_times, mov_sound_accuracies, mov_sound_scores = self.get_distribution_for_plot(metrics, tasks[1], results_mov_sound)
+        dir_sound_times, dir_sound_accuracies, dir_sound_scores = self.get_distribution_for_plot(metrics, tasks[2], results_dir_sound)
+
+        plt.figure(figsize=(20, 8))
+        ######################## mov_dir ########################
+        plt.subplot(3, 3, 1)
+        plt.plot(polarities, mov_dir_times[0], label="Movement")
+        plt.plot(polarities, mov_dir_times[1], label="Direction")
+        plt.title("Time")
+        plt.legend()
+
+        plt.subplot(3, 3, 2)
+        plt.plot(polarities, mov_dir_accuracies[0], label="Movement")
+        plt.plot(polarities, mov_dir_accuracies[1], label="Direction")
+        plt.title("Accuracy")
+        plt.legend()
+        
+        plt.subplot(3, 3, 3)
+        plt.plot(polarities, mov_dir_scores[0], label="Movement")
+        plt.plot(polarities, mov_dir_scores[1], label="Direction")
+        plt.title("Score")
+        plt.legend()
+
+        ######################## mov_sound ########################
+        plt.subplot(3, 3, 4)
+        plt.plot(polarities, mov_sound_times[0], label="Movement")
+        plt.plot(polarities, mov_sound_times[1], label="Sound")
+        plt.title("Time")
+        plt.legend()
+
+        plt.subplot(3, 3, 5)
+        plt.plot(polarities, mov_sound_accuracies[0], label="Movement")
+        plt.plot(polarities, mov_sound_accuracies[1], label="Sound")
+        plt.title("Accuracy")
+        plt.legend()
+
+        plt.subplot(3, 3, 6)
+        plt.plot(polarities, mov_sound_scores[0], label="Movement")
+        plt.plot(polarities, mov_sound_scores[1], label="Sound")
+        plt.title("Score")
+        plt.legend()
+
+        ######################## dir_sound ########################
+        plt.subplot(3, 3, 7)
+        plt.plot(polarities, dir_sound_times[0], label="Direction")
+        plt.plot(polarities, dir_sound_times[1], label="Sound")
+        plt.title("Time")
+        plt.legend()
+
+        plt.subplot(3, 3, 8)
+        plt.plot(polarities, dir_sound_accuracies[0], label="Direction")
+        plt.plot(polarities, dir_sound_accuracies[1], label="Sound")
+        plt.title("Accuracy")
+        plt.legend()
+
+        plt.subplot(3, 3, 9)
+        plt.plot(polarities, dir_sound_scores[0], label="Direction")
+        plt.plot(polarities, dir_sound_scores[1], label="Sound")
+        plt.title("Score")
+        plt.legend()
+
+        plt.tight_layout()
+        plt.show()
 
         
