@@ -304,6 +304,7 @@ class PerformanceMetrics:
         plt.subplot(3, 3, 1)
         plt.plot(polarities, mov_dir_times[0], label="Movement")
         plt.plot(polarities, mov_dir_times[1], label="Direction")
+        plt.ylim(0.5, 1.1)
         plt.title("Time(s)")
         plt.legend()
 
@@ -311,12 +312,14 @@ class PerformanceMetrics:
         plt.plot(polarities, mov_dir_accuracies[0], label="Movement")
         plt.plot(polarities, mov_dir_accuracies[1], label="Direction")
         plt.title("Accuracy(%)")
+        plt.ylim(60, 105)
         plt.legend()
         
         plt.subplot(3, 3, 3)
         plt.plot(polarities, mov_dir_scores[0], label="Movement")
         plt.plot(polarities, mov_dir_scores[1], label="Direction")
         plt.title("Score")
+        plt.ylim(0.1, 0.7)
         plt.legend()
 
         ######################## mov_sound ########################
@@ -324,18 +327,21 @@ class PerformanceMetrics:
         plt.plot(polarities, mov_sound_times[0], label="Movement")
         plt.plot(polarities, mov_sound_times[1], label="Sound")
         plt.title("Time(s)")
+        plt.ylim(0.5, 1.1)
         plt.legend()
 
         plt.subplot(3, 3, 5)
         plt.plot(polarities, mov_sound_accuracies[0], label="Movement")
         plt.plot(polarities, mov_sound_accuracies[1], label="Sound")
         plt.title("Accuracy(%)")
+        plt.ylim(60, 105)
         plt.legend()
 
         plt.subplot(3, 3, 6)
         plt.plot(polarities, mov_sound_scores[0], label="Movement")
         plt.plot(polarities, mov_sound_scores[1], label="Sound")
         plt.title("Score")
+        plt.ylim(0.1, 0.7)
         plt.legend()
 
         ######################## dir_sound ########################
@@ -343,18 +349,21 @@ class PerformanceMetrics:
         plt.plot(polarities, dir_sound_times[0], label="Direction")
         plt.plot(polarities, dir_sound_times[1], label="Sound")
         plt.title("Time(s)")
+        plt.ylim(0.5, 1.1)
         plt.legend()
 
         plt.subplot(3, 3, 8)
         plt.plot(polarities, dir_sound_accuracies[0], label="Direction")
         plt.plot(polarities, dir_sound_accuracies[1], label="Sound")
         plt.title("Accuracy(%)")
+        plt.ylim(60, 105)
         plt.legend()
 
         plt.subplot(3, 3, 9)
         plt.plot(polarities, dir_sound_scores[0], label="Direction")
         plt.plot(polarities, dir_sound_scores[1], label="Sound")
         plt.title("Score")
+        plt.ylim(0.1, 0.7)
         plt.legend()
 
         plt.suptitle(f"Performance Metrics: {self.get_what}")
