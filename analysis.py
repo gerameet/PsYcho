@@ -362,4 +362,6 @@ class PerformanceMetrics:
         # plt.show()
         plt.savefig(f"figures/analysis_{self.get_what}.png")
 
-        
+        # print("\n", results_mov_dir, "\n")
+        # print("\n", results_mov_sound, "\n")
+        # print("\n", results_dir_sound, "\n")

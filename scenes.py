@@ -200,8 +200,8 @@ class Sound(object):
         self.dur = duration
         self.amp = amplitude
         self.sound = self.object_creator.beep(frequency, duration, amplitude)
-        self.file_name = f"beep_f{frequency}_dur{duration}_amp{amplitude}.wav"
-        sf.write(f"beep_f{frequency}_dur{duration}_amp{amplitude}.wav", self.sound, 44100, format='WAV', subtype='PCM_16')
+        self.file_name = f"audio_files/beep_f{frequency}_dur{duration}_amp{amplitude}.wav"
+        sf.write(f"audio_files/beep_f{frequency}_dur{duration}_amp{amplitude}.wav", self.sound, 44100, format='WAV', subtype='PCM_16')
 
     def play(self, ear: str, is_moving: bool = False):
         '''

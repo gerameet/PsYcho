@@ -226,11 +226,11 @@ def driver():
     order_of_tasks = randomize_order_of_tasks()
     for task in order_of_tasks:
         if task == 'mov_dir':
-            movement_direction(10, 5, 5)
+            movement_direction(2, 2, 2)
         elif task == 'sound_mov':
-            sound_movement(10, 5, 5)
+            sound_movement(2, 2, 2)
         elif task == 'dir_sound':
-            direction_sound(10, 5, 5)
+            direction_sound(2, 2, 2)
         else:
             print("Invalid task")
     
