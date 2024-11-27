@@ -49,10 +49,12 @@ class UserPerformance:
         final_score = f"Your accuracy is " + str(accuracy) + "\nYou took " + str(time_taken) + "/" + str(total_time) + " seconds to complete the task."
         return final_score, accuracy, time_taken
     
-    def get_task_data(self):
+    def get_task_data(self, get_what: str = "both"):
         """
         this function returns the data of the user task wise 
         movement-direction, direction-sound, movement-sound
+        both (block and random) refers to all the data - neutral, block and random concatenated
+        get_what can be block, random or both
         """
         len_data = len(self.data)
         task_1 = self.data[:len_data//3]
@@ -98,6 +100,36 @@ class UserPerformance:
                     dir_sound = task_3
 
                 break
+
+        # need to change values based on the data length
+
+        # neutral is the first 20 rows
+        # block is the next 20 rows
+        # random is the last 20 rows
+
+        neutral_mov_dir = mov_dir[:20]
+        neutral_mov_sound = mov_sound[:20]
+        neutral_dir_sound = dir_sound[:20]
+
+        block_mov_dir = mov_dir[20:40]
+        block_mov_sound = mov_sound[20:40]
+        block_dir_sound = dir_sound[20:40]
+
+        random_mov_dir = mov_dir[40:]
+        random_mov_sound = mov_sound[40:]
+        random_dir_sound = dir_sound[40:]
+
+        if get_what == "block":
+            # return neutral and block data concatenated
+            mov_dir = pd.concat([neutral_mov_dir, block_mov_dir])
+            mov_sound = pd.concat([neutral_mov_sound, block_mov_sound])
+            dir_sound = pd.concat([neutral_dir_sound, block_dir_sound])
+
+        elif get_what == "random":
+            # return neutral and random data concatenated
+            mov_dir = pd.concat([neutral_mov_dir, random_mov_dir])
+            mov_sound = pd.concat([neutral_mov_sound, random_mov_sound])
+            dir_sound = pd.concat([neutral_dir_sound, random_dir_sound])
 
         return mov_dir, mov_sound, dir_sound
 
@@ -191,13 +223,16 @@ class Task_Analysis:
 
 
 class PerformanceMetrics:
-    def __init__(self, data_folder):
+    def __init__(self, data_folder, get_what: str = "both"):
         """
         takes in a folder of data which contains a csv file for each participant
+        get_what can be block, random or both
+        refer to the get_task_data function in UserPerformance class
         """
         self.data_folder = data_folder
         self.combined_mov_dir, self.combined_mov_sound, self.combined_dir_sound = pd.DataFrame(), pd.DataFrame(), pd.DataFrame()
         # store the combined data of all the participants
+        self.get_what = get_what
         self.get_combined_task_wise_data()
 
     def get_combined_task_wise_data(self):
@@ -207,7 +242,7 @@ class PerformanceMetrics:
         for file in os.listdir(self.data_folder):
             if file.endswith(".csv"):
                 user = UserPerformance(os.path.join(self.data_folder, file))
-                mov_dir, mov_sound, dir_sound = user.get_task_data()
+                mov_dir, mov_sound, dir_sound = user.get_task_data(self.get_what)
                 self.combined_mov_dir = pd.concat([self.combined_mov_dir, mov_dir])
                 self.combined_mov_sound = pd.concat([self.combined_mov_sound, mov_sound])
                 self.combined_dir_sound = pd.concat([self.combined_dir_sound, dir_sound])
@@ -264,7 +299,7 @@ class PerformanceMetrics:
         mov_sound_times, mov_sound_accuracies, mov_sound_scores = self.get_distribution_for_plot(metrics, tasks[1], results_mov_sound)
         dir_sound_times, dir_sound_accuracies, dir_sound_scores = self.get_distribution_for_plot(metrics, tasks[2], results_dir_sound)
 
-        plt.figure(figsize=(20, 8))
+        plt.figure(figsize=(15, 8))
         ######################## mov_dir ########################
         plt.subplot(3, 3, 1)
         plt.plot(polarities, mov_dir_times[0], label="Movement")
@@ -322,7 +357,9 @@ class PerformanceMetrics:
         plt.title("Score")
         plt.legend()
 
+        plt.suptitle(f"Performance Metrics: {self.get_what}")
         plt.tight_layout()
-        plt.show()
+        # plt.show()
+        plt.savefig(f"figures/analysis_{self.get_what}.png")
 
         
