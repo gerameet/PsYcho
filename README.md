@@ -33,6 +33,12 @@ The code has been structured to be as modular as possibe to make it easy for the
 ├── user_ids.txt
 └── utils.py
 ```
+
+To run the experiment run the following command:
+```
+python3 main.py
+```
+
 Description of files:
 1. `utils.py` consists of the helper functions that contain classes for creating scene (the game window), items to be displayed during a task, a timer to show during a scene and two classes that help with presenting text on the window and initiating pauses between scenes.
 2. `tasks.py` consists of the classes for each of the **tasks** (from Neutral, Conflict and Congruent) along with other helper functions used to achieve the render a desired output scene.
