@@ -1,6 +1,17 @@
 from tasks import *
-
+import argparse
 from analysis import *
+
+parser = argparse.ArgumentParser(description='Run the experiment')
+parser.add_argument('--num_neutral', type=int, default=1, help='Number of neutral tasks')
+parser.add_argument('--num_block', type=int, default=0, help='Number of block tasks')
+parser.add_argument('--num_mixed', type=int, default=0, help='Number of mixed tasks')
+parser.add_argument('--screen_width', type=int, default=1700, help='Width of the screen')
+parser.add_argument('--screen_height', type=int, default=900, help='Height of the screen')
+parser.add_argument('--speed', type=int, default=250, help='Speed of the arrow')
+
+args = parser.parse_args()
+config = vars(args)
 
 screen_width = 1700
 screen_height = 900
@@ -18,7 +29,6 @@ parameters = {
 }
 
 pause(1)
-
 
 def movement_direction(num_neutral, num_block, num_mixed):
 
@@ -222,15 +232,17 @@ def driver():
     no_use_obj = Neutral(screen, timer)
 
     write_and_pause(screen, 'Welcome !!', text_pause_time)
+    
+    # refractory test  -> get refractory time as output
 
     order_of_tasks = randomize_order_of_tasks()
     for task in order_of_tasks:
         if task == 'mov_dir':
-            movement_direction(10, 5, 5)
+            movement_direction(1, 0, 0)
         elif task == 'sound_mov':
-            sound_movement(10, 5, 5)
+            sound_movement(1, 0, 0)
         elif task == 'dir_sound':
-            direction_sound(10, 5, 5)
+            direction_sound(1, 0, 0)
         else:
             print("Invalid task")
     
