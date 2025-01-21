@@ -1,11 +1,12 @@
 import pygame
 from tasks import *
+import numpy as np
 
 class ReflexTest:
-    def __init__(self):
+    def __init__(self, screen_size: tuple=(800, 600)):
         """Initialize pygame and display"""
         pygame.init()
-        self.display = pygame.display.set_mode((800, 600))
+        self.display = pygame.display.set_mode(screen_size)
         
     def show_split_screen(self, color1, color2, text, stay_time):
         """
@@ -44,13 +45,51 @@ class ReflexTest:
         """Cleanup pygame resources"""
         pygame.quit()
 
-reflex_test = ReflexTest()
-reflex_test.show_split_screen((255, 0, 0), (0, 255, 0), "Left", 10000)
+# reflex_test = ReflexTest()
+# reflex_test.show_split_screen((255, 0, 0), (0, 255, 0), "Left", 10000)
 
 color_assoc = {
     'Movement': ['rg', 'gr', 'rb', 'br'],
     'Direction': ['bg', 'gb', 'br', 'rb'],
     'Sound': ['gr', 'rg', 'bg', 'gb']
 }
+
+# list of tuples with color associations - 12 elements in total
+color_assoc_extended = []
+for key, val in color_assoc.items():
+    for v in val:
+        color_assoc_extended.append((key, v))
+
+color_vals = {
+    'r': (255, 0, 0),
+    'g': (0, 255, 0),
+    'b': (0, 0, 255)
+}
+
+def run_refractory_test(color_assoc: dict=color_assoc, color_vals: dict=color_vals, pause_time: float=1, screen_size: tuple=(800, 600)):
+    """Run refractory period test"""
+
+    Test = ReflexTest(screen_size=screen_size)
+    num_cases = 1
+    count_array = len(color_assoc_extended)*[num_cases]
+    print(count_array)
+
+    while sum(count_array) > 0:
+        choose_non_zero = np.random.choice(np.nonzero(count_array)[0])
+        count_array[choose_non_zero] -= 1
+        color_type, color_pair = color_assoc_extended[choose_non_zero]
+        color1, color2 = color_vals[color_pair[0]], color_vals[color_pair[1]]
+        Test.show_split_screen(color1, color2, color_type, pause_time*1000)
+        Test.show_split_screen((0, 0, 0), (0, 0, 0), '', pause_time*1000)
+
+    Test.cleanup()
+    
+
+run_refractory_test(screen_size=(1700, 900))
+
+
+
+
+
 
 
