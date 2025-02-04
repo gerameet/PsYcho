@@ -60,6 +60,7 @@ def movement_direction(num_neutral, num_block, num_mixed):
             else:
                 print("Invalid case - (Needs to Be either Congruent or Conflict)!")
 
+    """
     # mixed design
     write_and_pause(screen, 'Mixed Cases - RANDOM', text_pause_time)
     choice_mat = np.ones((2, 2))*num_mixed
@@ -86,123 +87,125 @@ def movement_direction(num_neutral, num_block, num_mixed):
         choice_mat[int(choice_array_mixed[i][0])][int(choice_array_mixed[i][1])] -= 1
         
         object.createScene(is_block=True, tasks=task_arr,speed=parameters['speed'], time= parameters['time'], color= parameters['color'], radius= parameters['radius'], arrow_dims= parameters['arrow_dims'])
-
+    """
 
 def sound_movement(num_neutral, num_block, num_mixed):
     
-        write_and_pause(screen, 'Sound and Movement', text_pause_time)
-        
-        write_and_pause(screen, 'Neutral Mode', text_pause_time)
-        Neutral_obj = Neutral(screen, timer)
+    write_and_pause(screen, 'Sound and Movement', text_pause_time)
     
-        write_and_pause(screen, 'Sound', text_pause_time)
-        Neutral_obj.createScene(tasks=['Sound'], num_scenes= num_neutral, speed=parameters['speed'], time= parameters['time'], color= parameters['color'], radius= parameters['radius'], arrow_dims= parameters['arrow_dims'], frequency=500, volume=10)
-        
-        write_and_pause(screen, 'Movement', text_pause_time)
-        Neutral_obj.createScene(tasks=['Movement'], num_scenes=num_neutral, speed=parameters['speed'], time= parameters['time'], color= parameters['color'], radius= parameters['radius'], arrow_dims= parameters['arrow_dims'])
-            
-        write_and_pause(screen, 'Mixed Cases - BLOCK', text_pause_time)
-        
-        # block design
-        choice_array = ['Conflict' for i in range(num_block)] + ['Congruent' for i in range(num_block)]
-        np.random.shuffle(choice_array)
-        for task_arr in [['Sound', 'Movement'], ['Movement', 'Sound']]:
-            write_and_pause(screen, task_arr[0], text_pause_time)
-            for i in range(len(choice_array)):
-                if choice_array[i] == 'Conflict':
-                    Conflict_obj = Conflict(screen, timer)
-                    Conflict_obj.createScene(is_block = True, tasks=task_arr, speed=parameters['speed'], time= parameters['time'], color= parameters['color'], radius= parameters['radius'], arrow_dims= parameters['arrow_dims'], frequency=500, volume=10)
-                elif choice_array[i] == 'Congruent':
-                    Congruent_obj = Congruent(screen, timer)
-                    Congruent_obj.createScene(is_block = True, tasks=task_arr, speed=parameters['speed'], time= parameters['time'], color= parameters['color'], radius= parameters['radius'], arrow_dims= parameters['arrow_dims'], frequency=500, volume=10)
-                else:
-                    print("Invalid case - (Needs to Be either Congruent or Conflict)!")
-    
-        # mixed design
-        write_and_pause(screen, 'Mixed Cases - RANDOM', text_pause_time)
-        choice_mat = np.ones((2, 2))*num_mixed
-        choice_array_mixed = ['00' for i in range(num_mixed)] + ['01' for i in range(num_mixed)] + ['10' for i in range(num_mixed)] + ['11' for i in range(num_mixed)]
-        np.random.shuffle(choice_array_mixed)
-        # cases_Movement_and_Direction = [np.random.choice(['Congruent', 'Conflict']) for i in range(num_mixed)]
-        congruent_obj = Congruent(screen, timer)
-        conflict_obj = Conflict(screen, timer)
+    write_and_pause(screen, 'Neutral Mode', text_pause_time)
+    Neutral_obj = Neutral(screen, timer)
 
-        for i in range(len(choice_array_mixed)):
-            if choice_array_mixed[i][0] == '0' and choice_array_mixed[i][1] == '0':
-                object = congruent_obj
-                task_arr = ['Sound', 'Movement']
-            elif choice_array_mixed[i][0] == '0' and choice_array_mixed[i][1] == '1':
-                object = congruent_obj
-                task_arr = ['Movement', 'Sound']
-            elif choice_array_mixed[i][0] == '1' and choice_array_mixed[i][1] == '0':
-                object = conflict_obj
-                task_arr = ['Sound', 'Movement']
-            elif choice_array_mixed[i][0] == '1' and choice_array_mixed[i][1] == '1':
-                object = conflict_obj
-                task_arr = ['Movement', 'Sound']
+    write_and_pause(screen, 'Sound', text_pause_time)
+    Neutral_obj.createScene(tasks=['Sound'], num_scenes= num_neutral, speed=parameters['speed'], time= parameters['time'], color= parameters['color'], radius= parameters['radius'], arrow_dims= parameters['arrow_dims'], frequency=500, volume=10)
+    
+    write_and_pause(screen, 'Movement', text_pause_time)
+    Neutral_obj.createScene(tasks=['Movement'], num_scenes=num_neutral, speed=parameters['speed'], time= parameters['time'], color= parameters['color'], radius= parameters['radius'], arrow_dims= parameters['arrow_dims'])
+        
+    write_and_pause(screen, 'Mixed Cases - BLOCK', text_pause_time)
+    
+    # block design
+    choice_array = ['Conflict' for i in range(num_block)] + ['Congruent' for i in range(num_block)]
+    np.random.shuffle(choice_array)
+    for task_arr in [['Sound', 'Movement'], ['Movement', 'Sound']]:
+        write_and_pause(screen, task_arr[0], text_pause_time)
+        for i in range(len(choice_array)):
+            if choice_array[i] == 'Conflict':
+                Conflict_obj = Conflict(screen, timer)
+                Conflict_obj.createScene(is_block = True, tasks=task_arr, speed=parameters['speed'], time= parameters['time'], color= parameters['color'], radius= parameters['radius'], arrow_dims= parameters['arrow_dims'], frequency=500, volume=10)
+            elif choice_array[i] == 'Congruent':
+                Congruent_obj = Congruent(screen, timer)
+                Congruent_obj.createScene(is_block = True, tasks=task_arr, speed=parameters['speed'], time= parameters['time'], color= parameters['color'], radius= parameters['radius'], arrow_dims= parameters['arrow_dims'], frequency=500, volume=10)
             else:
                 print("Invalid case - (Needs to Be either Congruent or Conflict)!")
-            choice_mat[int(choice_array_mixed[i][0])][int(choice_array_mixed[i][1])] -= 1
-            object.createScene(is_block=True, tasks=task_arr, speed=parameters['speed'], time= parameters['time'], color= parameters['color'], radius= parameters['radius'], arrow_dims= parameters['arrow_dims'], frequency=500, volume=10)
 
+    """
+    # mixed design
+    write_and_pause(screen, 'Mixed Cases - RANDOM', text_pause_time)
+    choice_mat = np.ones((2, 2))*num_mixed
+    choice_array_mixed = ['00' for i in range(num_mixed)] + ['01' for i in range(num_mixed)] + ['10' for i in range(num_mixed)] + ['11' for i in range(num_mixed)]
+    np.random.shuffle(choice_array_mixed)
+    # cases_Movement_and_Direction = [np.random.choice(['Congruent', 'Conflict']) for i in range(num_mixed)]
+    congruent_obj = Congruent(screen, timer)
+    conflict_obj = Conflict(screen, timer)
+
+    for i in range(len(choice_array_mixed)):
+        if choice_array_mixed[i][0] == '0' and choice_array_mixed[i][1] == '0':
+            object = congruent_obj
+            task_arr = ['Sound', 'Movement']
+        elif choice_array_mixed[i][0] == '0' and choice_array_mixed[i][1] == '1':
+            object = congruent_obj
+            task_arr = ['Movement', 'Sound']
+        elif choice_array_mixed[i][0] == '1' and choice_array_mixed[i][1] == '0':
+            object = conflict_obj
+            task_arr = ['Sound', 'Movement']
+        elif choice_array_mixed[i][0] == '1' and choice_array_mixed[i][1] == '1':
+            object = conflict_obj
+            task_arr = ['Movement', 'Sound']
+        else:
+            print("Invalid case - (Needs to Be either Congruent or Conflict)!")
+        choice_mat[int(choice_array_mixed[i][0])][int(choice_array_mixed[i][1])] -= 1
+        object.createScene(is_block=True, tasks=task_arr, speed=parameters['speed'], time= parameters['time'], color= parameters['color'], radius= parameters['radius'], arrow_dims= parameters['arrow_dims'], frequency=500, volume=10)
+    """
 
 def direction_sound(num_neutral, num_block, num_mixed):
         
-            write_and_pause(screen, 'Direction and Sound', text_pause_time)
-            
-            write_and_pause(screen, 'Neutral Mode', text_pause_time)
-            Neutral_obj = Neutral(screen, timer)
-        
-            write_and_pause(screen, 'Direction', text_pause_time)
-            Neutral_obj.createScene(tasks=['Direction'], num_scenes= num_neutral, speed=parameters['speed'], time= parameters['time'], color= parameters['color'], radius= parameters['radius'], arrow_dims= parameters['arrow_dims'])
-            
-            write_and_pause(screen, 'Sound', text_pause_time)
-            Neutral_obj.createScene(tasks=['Sound'], num_scenes=num_neutral, speed=parameters['speed'], time= parameters['time'], color= parameters['color'], radius= parameters['radius'], arrow_dims= parameters['arrow_dims'], frequency=500, volume=10)
-                
-            write_and_pause(screen, 'Mixed Cases - BLOCK', text_pause_time)
-            
-            # block design
-            choice_array = ['Conflict' for i in range(num_block)] + ['Congruent' for i in range(num_block)]
-            np.random.shuffle(choice_array)
-            for task_arr in [['Direction', 'Sound'], ['Sound', 'Direction']]:
-                write_and_pause(screen, task_arr[0], text_pause_time)
-                for i in range(len(choice_array)):
-                    if choice_array[i] == 'Conflict':
-                        Conflict_obj = Conflict(screen, timer)
-                        Conflict_obj.createScene(is_block = True, tasks=task_arr, speed=parameters['speed'], time= parameters['time'], color= parameters['color'], radius= parameters['radius'], arrow_dims= parameters['arrow_dims'], frequency=500, volume=10)
-                    elif choice_array[i] == 'Congruent':
-                        Congruent_obj = Congruent(screen, timer)
-                        Congruent_obj.createScene(is_block = True, tasks=task_arr, speed=parameters['speed'], time= parameters['time'], color= parameters['color'], radius= parameters['radius'], arrow_dims= parameters['arrow_dims'], frequency=500, volume=10)
-                    else:
-                        print("Invalid case - (Needs to Be either Congruent or Conflict)!")
-        
-            # mixed design
-            write_and_pause(screen, 'Mixed Cases - RANDOM', text_pause_time)
-            choice_mat = np.ones((2, 2))*num_mixed
-            choice_array_mixed = ['00' for i in range(num_mixed)] + ['01' for i in range(num_mixed)] + ['10' for i in range(num_mixed)] + ['11' for i in range(num_mixed)]
-            np.random.shuffle(choice_array_mixed)
-            # cases_Movement_and_Direction = [np.random.choice(['Congruent', 'Conflict']) for i in range(num_mixed)]
-            congruent_obj = Congruent(screen, timer)
-            conflict_obj = Conflict(screen, timer)
-            
-            for i in range(len(choice_array_mixed)):
-                if choice_array_mixed[i][0] == '0' and choice_array_mixed[i][1] == '0':
-                    object = congruent_obj
-                    task_arr = ['Direction', 'Sound']
-                elif choice_array_mixed[i][0] == '0' and choice_array_mixed[i][1] == '1':
-                    object = congruent_obj
-                    task_arr = ['Sound', 'Direction']
-                elif choice_array_mixed[i][0] == '1' and choice_array_mixed[i][1] == '0':
-                    object = conflict_obj
-                    task_arr = ['Direction', 'Sound']
-                elif choice_array_mixed[i][0] == '1' and choice_array_mixed[i][1] == '1':
-                    object = conflict_obj
-                    task_arr = ['Sound', 'Direction']
-                else:
-                    print("Invalid case - (Needs to Be either Congruent or Conflict)!")
-                choice_mat[int(choice_array_mixed[i][0])][int(choice_array_mixed[i][1])] -= 1
-                object.createScene(is_block=True, tasks=task_arr, speed=parameters['speed'], time= parameters['time'], color= parameters['color'], radius= parameters['radius'], arrow_dims= parameters['arrow_dims'], frequency=500, volume=10)
+    write_and_pause(screen, 'Direction and Sound', text_pause_time)
+    
+    write_and_pause(screen, 'Neutral Mode', text_pause_time)
+    Neutral_obj = Neutral(screen, timer)
 
+    write_and_pause(screen, 'Direction', text_pause_time)
+    Neutral_obj.createScene(tasks=['Direction'], num_scenes= num_neutral, speed=parameters['speed'], time= parameters['time'], color= parameters['color'], radius= parameters['radius'], arrow_dims= parameters['arrow_dims'])
+    
+    write_and_pause(screen, 'Sound', text_pause_time)
+    Neutral_obj.createScene(tasks=['Sound'], num_scenes=num_neutral, speed=parameters['speed'], time= parameters['time'], color= parameters['color'], radius= parameters['radius'], arrow_dims= parameters['arrow_dims'], frequency=500, volume=10)
+        
+    write_and_pause(screen, 'Mixed Cases - BLOCK', text_pause_time)
+    
+    # block design
+    choice_array = ['Conflict' for i in range(num_block)] + ['Congruent' for i in range(num_block)]
+    np.random.shuffle(choice_array)
+    for task_arr in [['Direction', 'Sound'], ['Sound', 'Direction']]:
+        write_and_pause(screen, task_arr[0], text_pause_time)
+        for i in range(len(choice_array)):
+            if choice_array[i] == 'Conflict':
+                Conflict_obj = Conflict(screen, timer)
+                Conflict_obj.createScene(is_block = True, tasks=task_arr, speed=parameters['speed'], time= parameters['time'], color= parameters['color'], radius= parameters['radius'], arrow_dims= parameters['arrow_dims'], frequency=500, volume=10)
+            elif choice_array[i] == 'Congruent':
+                Congruent_obj = Congruent(screen, timer)
+                Congruent_obj.createScene(is_block = True, tasks=task_arr, speed=parameters['speed'], time= parameters['time'], color= parameters['color'], radius= parameters['radius'], arrow_dims= parameters['arrow_dims'], frequency=500, volume=10)
+            else:
+                print("Invalid case - (Needs to Be either Congruent or Conflict)!")
+
+    """
+    # mixed design
+    write_and_pause(screen, 'Mixed Cases - RANDOM', text_pause_time)
+    choice_mat = np.ones((2, 2))*num_mixed
+    choice_array_mixed = ['00' for i in range(num_mixed)] + ['01' for i in range(num_mixed)] + ['10' for i in range(num_mixed)] + ['11' for i in range(num_mixed)]
+    np.random.shuffle(choice_array_mixed)
+    # cases_Movement_and_Direction = [np.random.choice(['Congruent', 'Conflict']) for i in range(num_mixed)]
+    congruent_obj = Congruent(screen, timer)
+    conflict_obj = Conflict(screen, timer)
+    
+    for i in range(len(choice_array_mixed)):
+        if choice_array_mixed[i][0] == '0' and choice_array_mixed[i][1] == '0':
+            object = congruent_obj
+            task_arr = ['Direction', 'Sound']
+        elif choice_array_mixed[i][0] == '0' and choice_array_mixed[i][1] == '1':
+            object = congruent_obj
+            task_arr = ['Sound', 'Direction']
+        elif choice_array_mixed[i][0] == '1' and choice_array_mixed[i][1] == '0':
+            object = conflict_obj
+            task_arr = ['Direction', 'Sound']
+        elif choice_array_mixed[i][0] == '1' and choice_array_mixed[i][1] == '1':
+            object = conflict_obj
+            task_arr = ['Sound', 'Direction']
+        else:
+            print("Invalid case - (Needs to Be either Congruent or Conflict)!")
+        choice_mat[int(choice_array_mixed[i][0])][int(choice_array_mixed[i][1])] -= 1
+        object.createScene(is_block=True, tasks=task_arr, speed=parameters['speed'], time= parameters['time'], color= parameters['color'], radius= parameters['radius'], arrow_dims= parameters['arrow_dims'], frequency=500, volume=10)
+    """
 
 def get_user_id():
     # starts with 0 written in the file
@@ -238,11 +241,11 @@ def driver():
     order_of_tasks = randomize_order_of_tasks()
     for task in order_of_tasks:
         if task == 'mov_dir':
-            movement_direction(1, 0, 0)
+            movement_direction(10, 5, 5)
         elif task == 'sound_mov':
-            sound_movement(1, 0, 0)
+            sound_movement(10, 5, 5)
         elif task == 'dir_sound':
-            direction_sound(1, 0, 0)
+            direction_sound(10, 5, 5)
         else:
             print("Invalid task")
     
