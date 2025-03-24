@@ -2,7 +2,7 @@ import pygame
 import random
 import time
 import csv
-from transcriber import *
+from original_stroop.audio_processing.transcriber import *
 import argparse
 import threading
 
