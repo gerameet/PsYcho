@@ -1,0 +1,12 @@
+{
+    "num_neutral": 12,
+    "num_congruent": 12,
+    "num_conflict": 12,
+    "screen_width": 1700,
+    "screen_height": 900,
+    "stimulus_duration": 1.2,
+    "inter_stimulus_interval": 0.3,
+    "background_color": "black",
+    "neutral_words": "./neutral_words.txt",
+    "data_dir": "pilot_study_data"
+}
