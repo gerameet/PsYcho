@@ -20,6 +20,7 @@ parser.add_argument('--stimulus_duration', type=float, default=1, help='Duration
 parser.add_argument('--inter_stimulus_interval', type=float, default=0.25, help='Interval between stimuli')
 parser.add_argument('--background_color', type=str, default="black", help='Background color of the screen')
 parser.add_argument('--neutral_words', type=str, default="./neutral_words.txt", help='File containing neutral words')
+parser.add_argument('--data_dir', type=str, default="pilot_study_data", help='Directory to save data')
 args = parser.parse_args()
 config = vars(args)
 
@@ -113,37 +114,46 @@ def run_case(word_color_pair: tuple, filename: str):
     pygame.display.flip()
     time.sleep(inter_stimulus_interval * 0.75)
 
-def play_neutral(usr_folder_path: str):
+def write_to_csv(file_path: str, polarity: str, todotask: str, correct: str, total_time: float, audio_path: str):
+    with open(file_path, mode='a', newline='') as file:
+        writer = csv.writer(file)
+        writer.writerow([polarity, todotask, correct, total_time, audio_path])
+
+def play_neutral(usr_audio_dir: str, csv_file_path: str):
     neutral_count = 0
     display_text_for_duration("Say the WORD", text_color, 1.5)
     while neutral_count < num_neutral:
-        file_name = f"{usr_folder_path}/neutral_{neutral_count}_word.wav"
+        file_name = f"{usr_audio_dir}/neutral_{neutral_count}_word.wav"
         run_case(neutral_words_array[neutral_count], file_name)
+        write_to_csv(csv_file_path, "neutral", "word", neutral_words_array[neutral_count][0], config["stimulus_duration"], file_name)
         neutral_count += 1
     neutral_count = 0
     display_text_for_duration("Say the COLOR", text_color, 1.5)
     while neutral_count < num_neutral:
-        file_name = f"{usr_folder_path}/neutral_{neutral_count}_color.wav"
+        file_name = f"{usr_audio_dir}/neutral_{neutral_count}_color.wav"
         run_case(neutral_words_array[neutral_count], file_name)
+        write_to_csv(csv_file_path, "neutral", "color", neutral_words_array[neutral_count][1], config["stimulus_duration"], file_name)
         neutral_count += 1
 
-def play_congruent(usr_folder_path: str):
+def play_congruent(usr_audio_dir: str, csv_file_path: str):
     COLOR_NAMES_CONGRUENT = COLOR_NAMES * 3
     COLOR_NAMES_CONGRUENT = np.random.permutation(COLOR_NAMES_CONGRUENT)
     congruent_count = 0
     display_text_for_duration("Say the WORD", text_color, 1.5)
     while congruent_count < num_congruent:
-        file_name = f"{usr_folder_path}/congruent_{congruent_count}_word.wav"
+        file_name = f"{usr_audio_dir}/congruent_{congruent_count}_word.wav"
         run_case((COLOR_NAMES_CONGRUENT[congruent_count], COLORS[COLOR_NAMES_CONGRUENT[congruent_count]]), file_name)
+        write_to_csv(csv_file_path, "congruent", "word", COLOR_NAMES_CONGRUENT[congruent_count], config["stimulus_duration"], file_name)
         congruent_count += 1
     congruent_count = 0
     display_text_for_duration("Say the COLOR", text_color, 1.5)
     while congruent_count < num_congruent:
-        file_name = f"{usr_folder_path}/congruent_{congruent_count}_color.wav"
+        file_name = f"{usr_audio_dir}/congruent_{congruent_count}_color.wav"
         run_case((COLOR_NAMES_CONGRUENT[congruent_count], COLORS[COLOR_NAMES_CONGRUENT[congruent_count]]), file_name)
+        write_to_csv(csv_file_path, "congruent", "color", COLOR_NAMES_CONGRUENT[congruent_count], config["stimulus_duration"], file_name)
         congruent_count += 1
 
-def play_conflict(usr_folder_path: str):
+def play_conflict(usr_audio_dir: str, csv_file_path: str):
     COLOR_NAMES_CONFLICT = []
     for color in COLOR_NAMES:
         for c in COLOR_NAMES:
@@ -153,24 +163,52 @@ def play_conflict(usr_folder_path: str):
     conflict_count = 0
     display_text_for_duration("Say the WORD", text_color, 1.5)
     while conflict_count < num_conflict:
-        file_name = f"{usr_folder_path}/conflict_{conflict_count}_word.wav"
+        file_name = f"{usr_audio_dir}/conflict_{conflict_count}_word.wav"
         run_case(COLOR_NAMES_CONFLICT[conflict_count], file_name)
+        write_to_csv(csv_file_path, "conflict", "word", COLOR_NAMES_CONFLICT[conflict_count][0], config["stimulus_duration"], file_name)
         conflict_count += 1
     conflict_count = 0
     display_text_for_duration("Say the COLOR", text_color, 1.5)
     while conflict_count < num_conflict:
-        file_name = f"{usr_folder_path}/conflict_{conflict_count}_color.wav"
+        file_name = f"{usr_audio_dir}/conflict_{conflict_count}_color.wav"
         run_case(COLOR_NAMES_CONFLICT[conflict_count], file_name)
+        write_to_csv(csv_file_path, "conflict", "color", COLOR_NAMES_CONFLICT[conflict_count][1], config["stimulus_duration"], file_name)
         conflict_count += 1
+
+def get_user_id():
+    # starts with 0 written in the file
+    with open('user_ids.txt', 'r') as file:
+        lines = file.readlines()
+        last_line = lines[-1]
+        last_id = int(last_line.strip())
+        new_id = last_id + 1
+    # write new id to the file
+    with open('user_ids.txt', 'a') as file:
+        file.write(f'{new_id}\n')
+    return new_id
 
 # Main function to run the experiment
 def main():
-    usr_folder_path = "./audio_outputs_abhinav"
+    user_id = get_user_id()
+    print(f"User ID: {user_id}")
+
+    usr_folder_path = config["data_dir"] + f"/{user_id}"
+    os.makedirs(config["data_dir"], exist_ok=True)
     os.makedirs(usr_folder_path, exist_ok=True)
-    play_neutral(usr_folder_path)
-    play_congruent(usr_folder_path)
-    play_conflict(usr_folder_path)
+
+    usr_audio_dir = usr_folder_path + "/audios"
+    os.makedirs(usr_audio_dir, exist_ok=True)
+
+    csv_file_path = usr_folder_path + "/data.csv"
+    with open(csv_file_path, mode='w', newline='') as file:
+        writer = csv.writer(file)
+        writer.writerow(["polarity", "todotask", "correct", "total_time", "audio_path"])
+
+    play_neutral(usr_audio_dir, csv_file_path)
+    play_congruent(usr_audio_dir, csv_file_path)
+    play_conflict(usr_audio_dir, csv_file_path)
     pygame.quit()
+
 
 if __name__ == "__main__":
     main()

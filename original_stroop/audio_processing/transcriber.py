@@ -24,11 +24,13 @@ def transcribe_audio_files(files: list):
         results.append(result["text"])
     return results
 
-if __name__ == "__main__":
-    path_to_files = "../audio_outputs_soham"
-    files = os.listdir(path_to_files)
-    files = [os.path.join(path_to_files, file) for file in files]
-    files = sorted(files)
-    results = transcribe_audio_files(files)
-    for i, result in enumerate(results):
-        print(f"File {files[i]}: {result}")
+
+### Example usage
+# if __name__ == "__main__":
+#     path_to_files = "enter_path"
+#     files = os.listdir(path_to_files)
+#     files = [os.path.join(path_to_files, file) for file in files]
+#     files = sorted(files)
+#     results = transcribe_audio_files(files)
+#     for i, result in enumerate(results):
+#         print(f"File {files[i]}: {result}")
