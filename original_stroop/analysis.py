@@ -27,8 +27,11 @@ class UserPerformance:
         total_correct = 0
         for i in range(len(self.data)):
             
-            correct = self.data.iloc[i, 3]
+            correct = self.data.iloc[i, 2]
             response = self.data.iloc[i, 5]
+
+            correct = ''.join(e for e in str(correct).strip().lower() if e.isalnum())
+            response = ''.join(e for e in str(response).strip().lower() if e.isalnum())
 
             if correct == response:
                 total_correct += 1
@@ -45,88 +48,6 @@ class UserPerformance:
 
         final_score = f"Your accuracy is " + str(accuracy) + "\nYou took " + str(time_taken) + "/" + str(total_time) + " seconds to complete the task."
         return final_score, accuracy, time_taken
-    
-    def get_task_data(self, get_what: str = "both"):
-        """
-        this function returns the data of the user task wise 
-        word and color task
-        neutral, block and random concatenated
-        """
-        len_data = len(self.data)
-        task_1 = self.data[:len_data//3]
-        task_2 = self.data[len_data//3:2*len_data//3]
-        task_3 = self.data[2*len_data//3:]
-
-        word = pd.DataFrame()
-        color = pd.DataFrame()
-
-        for i in range(len(task_1)):
-            if task_1.iloc[i, 0] == "congruent":
-                tasks = (task_1.iloc[i, 1], task_1.iloc[i, 2])
-                if "word" in tasks:
-                    word = task_1
-                elif "Movement" in tasks and "Sound" in tasks:
-                    mov_sound = task_1
-                elif "Direction" in tasks and "Sound" in tasks:
-                    dir_sound = task_1
-
-                break
-
-        for i in range(len(task_2)):
-            if task_2.iloc[i, 0] == "congruent":
-                tasks = (task_2.iloc[i, 1], task_2.iloc[i, 2])
-                if "Movement" in tasks and "Direction" in tasks:
-                    mov_dir = task_2
-                elif "Movement" in tasks and "Sound" in tasks:
-                    mov_sound = task_2
-                elif "Direction" in tasks and "Sound" in tasks:
-                    dir_sound = task_2
-
-                break
-
-        for i in range(len(task_3)):
-            if task_3.iloc[i, 0] == "congruent":
-                tasks = (task_3.iloc[i, 1], task_3.iloc[i, 2])
-                if "Movement" in tasks and "Direction" in tasks:
-                    mov_dir = task_3
-                elif "Movement" in tasks and "Sound" in tasks:
-                    mov_sound = task_3
-                elif "Direction" in tasks and "Sound" in tasks:
-                    dir_sound = task_3
-
-                break
-
-        # need to change values based on the data length
-
-        # neutral is the first 20 rows
-        # block is the next 20 rows
-        # random is the last 20 rows
-
-        neutral_mov_dir = mov_dir[:20]
-        neutral_mov_sound = mov_sound[:20]
-        neutral_dir_sound = dir_sound[:20]
-
-        block_mov_dir = mov_dir[20:40]
-        block_mov_sound = mov_sound[20:40]
-        block_dir_sound = dir_sound[20:40]
-
-        random_mov_dir = mov_dir[40:]
-        random_mov_sound = mov_sound[40:]
-        random_dir_sound = dir_sound[40:]
-
-        if get_what == "block":
-            # return neutral and block data concatenated
-            mov_dir = pd.concat([neutral_mov_dir, block_mov_dir])
-            mov_sound = pd.concat([neutral_mov_sound, block_mov_sound])
-            dir_sound = pd.concat([neutral_dir_sound, block_dir_sound])
-
-        elif get_what == "random":
-            # return neutral and random data concatenated
-            mov_dir = pd.concat([neutral_mov_dir, random_mov_dir])
-            mov_sound = pd.concat([neutral_mov_sound, random_mov_sound])
-            dir_sound = pd.concat([neutral_dir_sound, random_dir_sound])
-
-        return mov_dir, mov_sound, dir_sound
 
 class Task_Analysis:
     """
@@ -147,9 +68,13 @@ class Task_Analysis:
         """
         total_correct = 0
         for i in range(len(task_data)):
-            correct = task_data.iloc[i, 3]
-            key_pressed = task_data.iloc[i, 5]
-            if correct == key_pressed:
+            correct = task_data.iloc[i, 2]
+            response = task_data.iloc[i, 5]
+
+            correct = ''.join(e for e in str(correct).strip().lower() if e.isalnum())
+            response = ''.join(e for e in str(response).strip().lower() if e.isalnum())
+
+            if correct == response:
                 total_correct += 1
 
         accuracy = total_correct / len(task_data)
@@ -186,12 +111,14 @@ class Task_Analysis:
         
         score = 0
         for i in range(len(task_data)):
-            correct = task_data.iloc[i, 3]
-            key_pressed = task_data.iloc[i, 5]
-            if correct == key_pressed:
+            correct = task_data.iloc[i, 2]
+            response = task_data.iloc[i, 5]
+
+            correct = ''.join(e for e in str(correct).strip().lower() if e.isalnum())
+            response = ''.join(e for e in str(response).strip().lower() if e.isalnum())
+
+            if correct == response:
                 score += get_correct_score(task_data.iloc[i])
-            elif key_pressed == "none":
-                score += get_none_score(task_data.iloc[i])
             else:
                 score += get_incorrect_score(task_data.iloc[i])
         
@@ -215,50 +142,35 @@ class Task_Analysis:
                 }
         return results
 
-
-
 class PerformanceMetrics:
-    def __init__(self, data_folder, get_what: str = "both"):
+    def __init__(self, data_folder):
         """
         takes in a folder of data which contains a csv file for each participant
         get_what can be block, random or both
         refer to the get_task_data function in UserPerformance class
         """
         self.data_folder = data_folder
-        self.combined_mov_dir, self.combined_mov_sound, self.combined_dir_sound = pd.DataFrame(), pd.DataFrame(), pd.DataFrame()
-        # store the combined data of all the participants
-        self.get_what = get_what
+        self.combined_data = pd.DataFrame()
         self.get_combined_task_wise_data()
 
     def get_combined_task_wise_data(self):
         """
         this function returns the combined data of all the participants
         """
-        for file in os.listdir(self.data_folder):
+        for user_folder in os.listdir(self.data_folder):
+            file = os.path.join(self.data_folder, user_folder, "data.csv")
             if file.endswith(".csv"):
-                user = UserPerformance(os.path.join(self.data_folder, file))
-                mov_dir, mov_sound, dir_sound = user.get_task_data(self.get_what)
-                self.combined_mov_dir = pd.concat([self.combined_mov_dir, mov_dir])
-                self.combined_mov_sound = pd.concat([self.combined_mov_sound, mov_sound])
-                self.combined_dir_sound = pd.concat([self.combined_dir_sound, dir_sound])
+                user = UserPerformance(file)
+                data = user.data
+                self.combined_data = pd.concat([self.combined_data, data])
 
     def get_results_task_wise(self):
-        task_analyser = Task_Analysis(self.combined_mov_dir, ("Movement", "Direction"))
-        results_mov_dir = {}
+        task_analyser = Task_Analysis(self.combined_data, ("word", "color"))
+        results = {}
         for polarity in ("neutral", "congruent", "conflict"):
-            results_mov_dir[polarity] = task_analyser.get_polarity_performance(polarity)
+            results[polarity] = task_analyser.get_polarity_performance(polarity)
 
-        task_analyser = Task_Analysis(self.combined_mov_sound, ("Movement", "Sound"))
-        results_mov_sound = {}
-        for polarity in ("neutral", "congruent", "conflict"):
-            results_mov_sound[polarity] = task_analyser.get_polarity_performance(polarity)
-
-        task_analyser = Task_Analysis(self.combined_dir_sound, ("Direction", "Sound"))
-        results_dir_sound = {}
-        for polarity in ("neutral", "congruent", "conflict"):
-            results_dir_sound[polarity] = task_analyser.get_polarity_performance(polarity)
-
-        return results_mov_dir, results_mov_sound, results_dir_sound
+        return results
 
     def get_distribution_for_plot(self, metrics, tasks, results):
         """
@@ -283,89 +195,42 @@ class PerformanceMetrics:
 
         return times, accuracies, scores
     
-    def plot_results(self):
-        results_mov_dir, results_mov_sound, results_dir_sound = self.get_results_task_wise()
+    def plot_results(self, save_path=None):
+        results = self.get_results_task_wise()
 
-        tasks = (["Movement", "Direction"], ["Movement", "Sound"], ["Direction","Sound"])
+        tasks = ["word", "color"]
         polarities = ("neutral", "congruent", "conflict")
         metrics = ("avg_reaction_time", "accuracy", "score")
 
-        mov_dir_times, mov_dir_accuracies, mov_dir_scores = self.get_distribution_for_plot(metrics, tasks[0], results_mov_dir)
-        mov_sound_times, mov_sound_accuracies, mov_sound_scores = self.get_distribution_for_plot(metrics, tasks[1], results_mov_sound)
-        dir_sound_times, dir_sound_accuracies, dir_sound_scores = self.get_distribution_for_plot(metrics, tasks[2], results_dir_sound)
+        times, accuracies, scores = self.get_distribution_for_plot(metrics, tasks, results)
 
-        plt.figure(figsize=(15, 8))
-        ######################## mov_dir ########################
-        plt.subplot(3, 3, 1)
-        plt.plot(polarities, mov_dir_times[0], label="Movement")
-        plt.plot(polarities, mov_dir_times[1], label="Direction")
-        plt.ylim(0.5, 1.1)
+        plt.figure(figsize=(15, 5))
+
+        plt.subplot(1, 3, 1)
+        plt.plot(polarities, times[0], label="word")
+        plt.plot(polarities, times[1], label="color")
+        # plt.ylim(0.5, 1.1)
         plt.title("Time(s)")
         plt.legend()
 
-        plt.subplot(3, 3, 2)
-        plt.plot(polarities, mov_dir_accuracies[0], label="Movement")
-        plt.plot(polarities, mov_dir_accuracies[1], label="Direction")
+        plt.subplot(1, 3, 2)
+        plt.plot(polarities, accuracies[0], label="word")
+        plt.plot(polarities, accuracies[1], label="color")
         plt.title("Accuracy(%)")
-        plt.ylim(60, 105)
+        # plt.ylim(60, 105)
         plt.legend()
         
-        plt.subplot(3, 3, 3)
-        plt.plot(polarities, mov_dir_scores[0], label="Movement")
-        plt.plot(polarities, mov_dir_scores[1], label="Direction")
+        plt.subplot(1, 3, 3)
+        plt.plot(polarities, scores[0], label="word")
+        plt.plot(polarities, scores[1], label="color")
         plt.title("Score")
-        plt.ylim(0.1, 0.7)
+        # plt.ylim(0.1, 0.7)
         plt.legend()
 
-        ######################## mov_sound ########################
-        plt.subplot(3, 3, 4)
-        plt.plot(polarities, mov_sound_times[0], label="Movement")
-        plt.plot(polarities, mov_sound_times[1], label="Sound")
-        plt.title("Time(s)")
-        plt.ylim(0.5, 1.1)
-        plt.legend()
-
-        plt.subplot(3, 3, 5)
-        plt.plot(polarities, mov_sound_accuracies[0], label="Movement")
-        plt.plot(polarities, mov_sound_accuracies[1], label="Sound")
-        plt.title("Accuracy(%)")
-        plt.ylim(60, 105)
-        plt.legend()
-
-        plt.subplot(3, 3, 6)
-        plt.plot(polarities, mov_sound_scores[0], label="Movement")
-        plt.plot(polarities, mov_sound_scores[1], label="Sound")
-        plt.title("Score")
-        plt.ylim(0.1, 0.7)
-        plt.legend()
-
-        ######################## dir_sound ########################
-        plt.subplot(3, 3, 7)
-        plt.plot(polarities, dir_sound_times[0], label="Direction")
-        plt.plot(polarities, dir_sound_times[1], label="Sound")
-        plt.title("Time(s)")
-        plt.ylim(0.5, 1.1)
-        plt.legend()
-
-        plt.subplot(3, 3, 8)
-        plt.plot(polarities, dir_sound_accuracies[0], label="Direction")
-        plt.plot(polarities, dir_sound_accuracies[1], label="Sound")
-        plt.title("Accuracy(%)")
-        plt.ylim(60, 105)
-        plt.legend()
-
-        plt.subplot(3, 3, 9)
-        plt.plot(polarities, dir_sound_scores[0], label="Direction")
-        plt.plot(polarities, dir_sound_scores[1], label="Sound")
-        plt.title("Score")
-        plt.ylim(0.1, 0.7)
-        plt.legend()
-
-        plt.suptitle(f"Performance Metrics: {self.get_what}")
+        plt.suptitle("Task Performance Analysis")
         plt.tight_layout()
-        # plt.show()
-        plt.savefig(f"figures/analysis_{self.get_what}.png")
-
-        # print("\n", results_mov_dir, "\n")
-        # print("\n", results_mov_sound, "\n")
-        # print("\n", results_dir_sound, "\n")
+        if save_path:
+            plt.savefig(os.path.join(save_path, "og_stroop_pilot.png"))
+            print("Plots saved in " + save_path)
+        else:
+            plt.show()

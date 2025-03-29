@@ -1,73 +1,73 @@
-polarity,todotask,correct,total_time,audio_path
-neutral,word,HOUSE,1,pilot_study_data/1/audios/neutral_0_word.wav
-neutral,word,CAT,1,pilot_study_data/1/audios/neutral_1_word.wav
-neutral,word,BALL,1,pilot_study_data/1/audios/neutral_2_word.wav
-neutral,word,TABLE,1,pilot_study_data/1/audios/neutral_3_word.wav
-neutral,word,ROCK,1,pilot_study_data/1/audios/neutral_4_word.wav
-neutral,word,TREE,1,pilot_study_data/1/audios/neutral_5_word.wav
-neutral,word,BOOK,1,pilot_study_data/1/audios/neutral_6_word.wav
-neutral,word,ROPE,1,pilot_study_data/1/audios/neutral_7_word.wav
-neutral,word,FISH,1,pilot_study_data/1/audios/neutral_8_word.wav
-neutral,word,BABY,1,pilot_study_data/1/audios/neutral_9_word.wav
-neutral,word,SPOON,1,pilot_study_data/1/audios/neutral_10_word.wav
-neutral,word,GUN,1,pilot_study_data/1/audios/neutral_11_word.wav
-neutral,color,BLUE,1,pilot_study_data/1/audios/neutral_0_color.wav
-neutral,color,GREEN,1,pilot_study_data/1/audios/neutral_1_color.wav
-neutral,color,YELLOW,1,pilot_study_data/1/audios/neutral_2_color.wav
-neutral,color,BLUE,1,pilot_study_data/1/audios/neutral_3_color.wav
-neutral,color,RED,1,pilot_study_data/1/audios/neutral_4_color.wav
-neutral,color,YELLOW,1,pilot_study_data/1/audios/neutral_5_color.wav
-neutral,color,GREEN,1,pilot_study_data/1/audios/neutral_6_color.wav
-neutral,color,BLUE,1,pilot_study_data/1/audios/neutral_7_color.wav
-neutral,color,GREEN,1,pilot_study_data/1/audios/neutral_8_color.wav
-neutral,color,RED,1,pilot_study_data/1/audios/neutral_9_color.wav
-neutral,color,YELLOW,1,pilot_study_data/1/audios/neutral_10_color.wav
-neutral,color,RED,1,pilot_study_data/1/audios/neutral_11_color.wav
-congruent,word,GREEN,1,pilot_study_data/1/audios/congruent_0_word.wav
-congruent,word,RED,1,pilot_study_data/1/audios/congruent_1_word.wav
-congruent,word,YELLOW,1,pilot_study_data/1/audios/congruent_2_word.wav
-congruent,word,GREEN,1,pilot_study_data/1/audios/congruent_3_word.wav
-congruent,word,BLUE,1,pilot_study_data/1/audios/congruent_4_word.wav
-congruent,word,BLUE,1,pilot_study_data/1/audios/congruent_5_word.wav
-congruent,word,GREEN,1,pilot_study_data/1/audios/congruent_6_word.wav
-congruent,word,YELLOW,1,pilot_study_data/1/audios/congruent_7_word.wav
-congruent,word,BLUE,1,pilot_study_data/1/audios/congruent_8_word.wav
-congruent,word,RED,1,pilot_study_data/1/audios/congruent_9_word.wav
-congruent,word,RED,1,pilot_study_data/1/audios/congruent_10_word.wav
-congruent,word,YELLOW,1,pilot_study_data/1/audios/congruent_11_word.wav
-congruent,color,GREEN,1,pilot_study_data/1/audios/congruent_0_color.wav
-congruent,color,RED,1,pilot_study_data/1/audios/congruent_1_color.wav
-congruent,color,YELLOW,1,pilot_study_data/1/audios/congruent_2_color.wav
-congruent,color,GREEN,1,pilot_study_data/1/audios/congruent_3_color.wav
-congruent,color,BLUE,1,pilot_study_data/1/audios/congruent_4_color.wav
-congruent,color,BLUE,1,pilot_study_data/1/audios/congruent_5_color.wav
-congruent,color,GREEN,1,pilot_study_data/1/audios/congruent_6_color.wav
-congruent,color,YELLOW,1,pilot_study_data/1/audios/congruent_7_color.wav
-congruent,color,BLUE,1,pilot_study_data/1/audios/congruent_8_color.wav
-congruent,color,RED,1,pilot_study_data/1/audios/congruent_9_color.wav
-congruent,color,RED,1,pilot_study_data/1/audios/congruent_10_color.wav
-congruent,color,YELLOW,1,pilot_study_data/1/audios/congruent_11_color.wav
-conflict,word,RED,1,pilot_study_data/1/audios/conflict_0_word.wav
-conflict,word,BLUE,1,pilot_study_data/1/audios/conflict_1_word.wav
-conflict,word,GREEN,1,pilot_study_data/1/audios/conflict_2_word.wav
-conflict,word,RED,1,pilot_study_data/1/audios/conflict_3_word.wav
-conflict,word,YELLOW,1,pilot_study_data/1/audios/conflict_4_word.wav
-conflict,word,YELLOW,1,pilot_study_data/1/audios/conflict_5_word.wav
-conflict,word,BLUE,1,pilot_study_data/1/audios/conflict_6_word.wav
-conflict,word,GREEN,1,pilot_study_data/1/audios/conflict_7_word.wav
-conflict,word,YELLOW,1,pilot_study_data/1/audios/conflict_8_word.wav
-conflict,word,RED,1,pilot_study_data/1/audios/conflict_9_word.wav
-conflict,word,GREEN,1,pilot_study_data/1/audios/conflict_10_word.wav
-conflict,word,BLUE,1,pilot_study_data/1/audios/conflict_11_word.wav
-conflict,color,GREEN,1,pilot_study_data/1/audios/conflict_0_color.wav
-conflict,color,YELLOW,1,pilot_study_data/1/audios/conflict_1_color.wav
-conflict,color,RED,1,pilot_study_data/1/audios/conflict_2_color.wav
-conflict,color,BLUE,1,pilot_study_data/1/audios/conflict_3_color.wav
-conflict,color,BLUE,1,pilot_study_data/1/audios/conflict_4_color.wav
-conflict,color,GREEN,1,pilot_study_data/1/audios/conflict_5_color.wav
-conflict,color,RED,1,pilot_study_data/1/audios/conflict_6_color.wav
-conflict,color,YELLOW,1,pilot_study_data/1/audios/conflict_7_color.wav
-conflict,color,RED,1,pilot_study_data/1/audios/conflict_8_color.wav
-conflict,color,YELLOW,1,pilot_study_data/1/audios/conflict_9_color.wav
-conflict,color,BLUE,1,pilot_study_data/1/audios/conflict_10_color.wav
-conflict,color,GREEN,1,pilot_study_data/1/audios/conflict_11_color.wav
+polarity,todotask,correct,total_time,audio_path,response,time_taken
+neutral,word,HOUSE,1.2,pilot_study_data/1/audios/neutral_0_word.wav, House.,0.9000000000000001
+neutral,word,CAT,1.2,pilot_study_data/1/audios/neutral_1_word.wav," So, Now,",0.585
+neutral,word,BALL,1.2,pilot_study_data/1/audios/neutral_2_word.wav, Ball.,0.675
+neutral,word,TABLE,1.2,pilot_study_data/1/audios/neutral_3_word.wav,UNKNOWN!,0.6799999999999999
+neutral,word,ROCK,1.2,pilot_study_data/1/audios/neutral_4_word.wav, Good update.,0.585
+neutral,word,TREE,1.2,pilot_study_data/1/audios/neutral_5_word.wav, 3,0.645
+neutral,word,BOOK,1.2,pilot_study_data/1/audios/neutral_6_word.wav, book.,0.535
+neutral,word,ROPE,1.2,pilot_study_data/1/audios/neutral_7_word.wav,野,0.625
+neutral,word,FISH,1.2,pilot_study_data/1/audios/neutral_8_word.wav, fish,0.71
+neutral,word,BABY,1.2,pilot_study_data/1/audios/neutral_9_word.wav, Maybe?,0.675
+neutral,word,SPOON,1.2,pilot_study_data/1/audios/neutral_10_word.wav, Spoon.,0.6699999999999999
+neutral,word,GUN,1.2,pilot_study_data/1/audios/neutral_11_word.wav, Gun.,0.485
+neutral,color,BLUE,1.2,pilot_study_data/1/audios/neutral_0_color.wav, blue,1.075
+neutral,color,GREEN,1.2,pilot_study_data/1/audios/neutral_1_color.wav, Green.,0.87
+neutral,color,YELLOW,1.2,pilot_study_data/1/audios/neutral_2_color.wav, yellow,0.835
+neutral,color,BLUE,1.2,pilot_study_data/1/audios/neutral_3_color.wav, blue,0.99
+neutral,color,RED,1.2,pilot_study_data/1/audios/neutral_4_color.wav, read,0.895
+neutral,color,YELLOW,1.2,pilot_study_data/1/audios/neutral_5_color.wav, yellow,1.08
+neutral,color,GREEN,1.2,pilot_study_data/1/audios/neutral_6_color.wav, Green.,0.8800000000000001
+neutral,color,BLUE,1.2,pilot_study_data/1/audios/neutral_7_color.wav, Blue,1.005
+neutral,color,GREEN,1.2,pilot_study_data/1/audios/neutral_8_color.wav, Green.,1.2
+neutral,color,RED,1.2,pilot_study_data/1/audios/neutral_9_color.wav, Great!,0.78
+neutral,color,YELLOW,1.2,pilot_study_data/1/audios/neutral_10_color.wav, yellow,0.91
+neutral,color,RED,1.2,pilot_study_data/1/audios/neutral_11_color.wav,screams,0.82
+congruent,word,GREEN,1.2,pilot_study_data/1/audios/congruent_0_word.wav, Green.,0.975
+congruent,word,RED,1.2,pilot_study_data/1/audios/congruent_1_word.wav, Red,0.775
+congruent,word,YELLOW,1.2,pilot_study_data/1/audios/congruent_2_word.wav, yellow,0.735
+congruent,word,BLUE,1.2,pilot_study_data/1/audios/congruent_3_word.wav, Blue,0.675
+congruent,word,YELLOW,1.2,pilot_study_data/1/audios/congruent_4_word.wav, yellow,0.7150000000000001
+congruent,word,RED,1.2,pilot_study_data/1/audios/congruent_5_word.wav, read,0.63
+congruent,word,YELLOW,1.2,pilot_study_data/1/audios/congruent_6_word.wav, yellow,0.75
+congruent,word,BLUE,1.2,pilot_study_data/1/audios/congruent_7_word.wav, Blue.,0.6950000000000001
+congruent,word,GREEN,1.2,pilot_study_data/1/audios/congruent_8_word.wav, Green.,0.7350000000000001
+congruent,word,BLUE,1.2,pilot_study_data/1/audios/congruent_9_word.wav, Blue,0.605
+congruent,word,GREEN,1.2,pilot_study_data/1/audios/congruent_10_word.wav, Green.,0.6950000000000001
+congruent,word,RED,1.2,pilot_study_data/1/audios/congruent_11_word.wav, Red,0.625
+congruent,color,GREEN,1.2,pilot_study_data/1/audios/congruent_0_color.wav, Green.,0.865
+congruent,color,RED,1.2,pilot_study_data/1/audios/congruent_1_color.wav, good now,0.71
+congruent,color,YELLOW,1.2,pilot_study_data/1/audios/congruent_2_color.wav, yellow,0.6699999999999999
+congruent,color,BLUE,1.2,pilot_study_data/1/audios/congruent_3_color.wav, Blue.,0.665
+congruent,color,YELLOW,1.2,pilot_study_data/1/audios/congruent_4_color.wav, yellow,0.815
+congruent,color,RED,1.2,pilot_study_data/1/audios/congruent_5_color.wav, Kred.,0.76
+congruent,color,YELLOW,1.2,pilot_study_data/1/audios/congruent_6_color.wav, yellow,0.635
+congruent,color,BLUE,1.2,pilot_study_data/1/audios/congruent_7_color.wav, Blue.,0.5549999999999999
+congruent,color,GREEN,1.2,pilot_study_data/1/audios/congruent_8_color.wav, Green.,0.675
+congruent,color,BLUE,1.2,pilot_study_data/1/audios/congruent_9_color.wav, blue,0.525
+congruent,color,GREEN,1.2,pilot_study_data/1/audios/congruent_10_color.wav, Green.,0.69
+congruent,color,RED,1.2,pilot_study_data/1/audios/congruent_11_color.wav, Good night.,0.73
+conflict,word,GREEN,1.2,pilot_study_data/1/audios/conflict_0_word.wav, Green.,0.77
+conflict,word,BLUE,1.2,pilot_study_data/1/audios/conflict_1_word.wav, Blue.,0.6699999999999999
+conflict,word,YELLOW,1.2,pilot_study_data/1/audios/conflict_2_word.wav, yellow,0.64
+conflict,word,RED,1.2,pilot_study_data/1/audios/conflict_3_word.wav, great.,0.595
+conflict,word,GREEN,1.2,pilot_study_data/1/audios/conflict_4_word.wav, Green.,0.6950000000000001
+conflict,word,RED,1.2,pilot_study_data/1/audios/conflict_5_word.wav,้าっ!,0.59
+conflict,word,RED,1.2,pilot_study_data/1/audios/conflict_6_word.wav, Red,0.62
+conflict,word,BLUE,1.2,pilot_study_data/1/audios/conflict_7_word.wav, Blue.,0.655
+conflict,word,BLUE,1.2,pilot_study_data/1/audios/conflict_8_word.wav, Lou,0.6499999999999999
+conflict,word,GREEN,1.2,pilot_study_data/1/audios/conflict_9_word.wav, Green.,0.645
+conflict,word,YELLOW,1.2,pilot_study_data/1/audios/conflict_10_word.wav, yellow,0.575
+conflict,word,YELLOW,1.2,pilot_study_data/1/audios/conflict_11_word.wav, yellow,0.665
+conflict,color,BLUE,1.2,pilot_study_data/1/audios/conflict_0_color.wav, Blue,1.015
+conflict,color,GREEN,1.2,pilot_study_data/1/audios/conflict_1_color.wav, Green.,0.985
+conflict,color,RED,1.2,pilot_study_data/1/audios/conflict_2_color.wav, Bred,0.835
+conflict,color,YELLOW,1.2,pilot_study_data/1/audios/conflict_3_color.wav, yellow,0.945
+conflict,color,YELLOW,1.2,pilot_study_data/1/audios/conflict_4_color.wav, yellow,0.88
+conflict,color,BLUE,1.2,pilot_study_data/1/audios/conflict_5_color.wav, siege,1.0
+conflict,color,GREEN,1.2,pilot_study_data/1/audios/conflict_6_color.wav, Green.,0.97
+conflict,color,RED,1.2,pilot_study_data/1/audios/conflict_7_color.wav, yeah,0.985
+conflict,color,YELLOW,1.2,pilot_study_data/1/audios/conflict_8_color.wav, yellow,1.035
+conflict,color,RED,1.2,pilot_study_data/1/audios/conflict_9_color.wav, Red,1.025
+conflict,color,GREEN,1.2,pilot_study_data/1/audios/conflict_10_color.wav, Green.,1.03
+conflict,color,BLUE,1.2,pilot_study_data/1/audios/conflict_11_color.wav, Woooo!,1.2

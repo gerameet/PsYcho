@@ -6,6 +6,7 @@ import csv
 from audio_processing.transcriber import *
 import argparse
 import threading
+import json
 
 # Initialize Pygame
 pygame.init()
@@ -16,13 +17,16 @@ parser.add_argument('--num_congruent', type=int, default=12, help='Number of con
 parser.add_argument('--num_conflict', type=int, default=12, help='Number of conflict trials')
 parser.add_argument('--screen_width', type=int, default=1700, help='Width of the screen')
 parser.add_argument('--screen_height', type=int, default=900, help='Height of the screen')
-parser.add_argument('--stimulus_duration', type=float, default=1, help='Duration of the stimulus')
-parser.add_argument('--inter_stimulus_interval', type=float, default=0.25, help='Interval between stimuli')
+parser.add_argument('--stimulus_duration', type=float, default=1.2, help='Duration of the stimulus')
+parser.add_argument('--inter_stimulus_interval', type=float, default=0.3, help='Interval between stimuli')
 parser.add_argument('--background_color', type=str, default="black", help='Background color of the screen')
 parser.add_argument('--neutral_words', type=str, default="./neutral_words.txt", help='File containing neutral words')
 parser.add_argument('--data_dir', type=str, default="pilot_study_data", help='Directory to save data')
 args = parser.parse_args()
 config = vars(args)
+with open('config.json', 'w') as f:
+    json.dump(config, f, indent=4)
+
 
 # Screen settings
 WIDTH, HEIGHT = config["screen_width"], config["screen_height"]

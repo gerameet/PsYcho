@@ -120,7 +120,7 @@ def process_single_audio_from_csv(csv_path, line_number):
 
 if __name__ == "__main__":
 
-    csv_path = "../pilot_study_data/4/data.csv"  
-    line_number = 3  # 0-based index (ignoring header)
+    csv_path = "../pilot_study_data/2/data.csv"  
+    line_number = 5  # 0-based index (ignoring header)
     
     process_single_audio_from_csv(csv_path, line_number)

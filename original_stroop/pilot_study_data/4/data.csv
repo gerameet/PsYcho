@@ -1,0 +1,73 @@
+polarity,todotask,correct,total_time,audio_path,response,time_taken
+neutral,word,HOUSE,1.2,pilot_study_data/4/audios/neutral_0_word.wav, I can finally see the costume,1.0
+neutral,word,CAT,1.2,pilot_study_data/4/audios/neutral_1_word.wav, Can't.,0.9
+neutral,word,BALL,1.2,pilot_study_data/4/audios/neutral_2_word.wav, one,1.2
+neutral,word,TABLE,1.2,pilot_study_data/4/audios/neutral_3_word.wav, Double,1.2
+neutral,word,ROCK,1.2,pilot_study_data/4/audios/neutral_4_word.wav, Roll.,1.2
+neutral,word,TREE,1.2,pilot_study_data/4/audios/neutral_5_word.wav, 3,0.97
+neutral,word,BOOK,1.2,pilot_study_data/4/audios/neutral_6_word.wav, Youtube,0.36
+neutral,word,ROPE,1.2,pilot_study_data/4/audios/neutral_7_word.wav, roll,1.2
+neutral,word,FISH,1.2,pilot_study_data/4/audios/neutral_8_word.wav, Fish!,1.115
+neutral,word,BABY,1.2,pilot_study_data/4/audios/neutral_9_word.wav, baby,0.87
+neutral,word,SPOON,1.2,pilot_study_data/4/audios/neutral_10_word.wav, Spoon.,1.2
+neutral,word,GUN,1.2,pilot_study_data/4/audios/neutral_11_word.wav, Gun.,1.04
+neutral,color,BLUE,1.2,pilot_study_data/4/audios/neutral_0_color.wav,,0.215
+neutral,color,GREEN,1.2,pilot_study_data/4/audios/neutral_1_color.wav, Blue Green,0.425
+neutral,color,YELLOW,1.2,pilot_study_data/4/audios/neutral_2_color.wav, I'll heal you,1.2
+neutral,color,BLUE,1.2,pilot_study_data/4/audios/neutral_3_color.wav, Blue.,1.045
+neutral,color,RED,1.2,pilot_study_data/4/audios/neutral_4_color.wav, Red,1.035
+neutral,color,YELLOW,1.2,pilot_study_data/4/audios/neutral_5_color.wav," Yeah, slow",1.2
+neutral,color,GREEN,1.2,pilot_study_data/4/audios/neutral_6_color.wav, Green.,1.2
+neutral,color,BLUE,1.2,pilot_study_data/4/audios/neutral_7_color.wav, potatoes,1.025
+neutral,color,GREEN,1.2,pilot_study_data/4/audios/neutral_8_color.wav, Ruin,1.2
+neutral,color,RED,1.2,pilot_study_data/4/audios/neutral_9_color.wav, Red,1.075
+neutral,color,YELLOW,1.2,pilot_study_data/4/audios/neutral_10_color.wav, get it low,1.2
+neutral,color,RED,1.2,pilot_study_data/4/audios/neutral_11_color.wav, Red,1.005
+congruent,word,RED,1.2,pilot_study_data/4/audios/congruent_0_word.wav, Red,1.2
+congruent,word,RED,1.2,pilot_study_data/4/audios/congruent_1_word.wav, Red,0.98
+congruent,word,GREEN,1.2,pilot_study_data/4/audios/congruent_2_word.wav, Green,1.2
+congruent,word,YELLOW,1.2,pilot_study_data/4/audios/congruent_3_word.wav, ELO,1.2
+congruent,word,RED,1.2,pilot_study_data/4/audios/congruent_4_word.wav, Red,1.04
+congruent,word,GREEN,1.2,pilot_study_data/4/audios/congruent_5_word.wav, Green.,1.015
+congruent,word,YELLOW,1.2,pilot_study_data/4/audios/congruent_6_word.wav, help,1.2
+congruent,word,BLUE,1.2,pilot_study_data/4/audios/congruent_7_word.wav, Blue.,1.02
+congruent,word,BLUE,1.2,pilot_study_data/4/audios/congruent_8_word.wav, Loav Jefferson.,0.98
+congruent,word,GREEN,1.2,pilot_study_data/4/audios/congruent_9_word.wav, Green.,0.97
+congruent,word,BLUE,1.2,pilot_study_data/4/audios/congruent_10_word.wav, Lum,1.025
+congruent,word,YELLOW,1.2,pilot_study_data/4/audios/congruent_11_word.wav, Below,1.035
+congruent,color,RED,1.2,pilot_study_data/4/audios/congruent_0_color.wav, one is Mor Barbara Super,1.2
+congruent,color,RED,1.2,pilot_study_data/4/audios/congruent_1_color.wav, Red,1.065
+congruent,color,GREEN,1.2,pilot_study_data/4/audios/congruent_2_color.wav,,1.2
+congruent,color,YELLOW,1.2,pilot_study_data/4/audios/congruent_3_color.wav,,1.2
+congruent,color,RED,1.2,pilot_study_data/4/audios/congruent_4_color.wav, Right.,1.2
+congruent,color,GREEN,1.2,pilot_study_data/4/audios/congruent_5_color.wav,,1.2
+congruent,color,YELLOW,1.2,pilot_study_data/4/audios/congruent_6_color.wav, yelu,1.2
+congruent,color,BLUE,1.2,pilot_study_data/4/audios/congruent_7_color.wav, Blu,1.01
+congruent,color,BLUE,1.2,pilot_study_data/4/audios/congruent_8_color.wav,,1.2
+congruent,color,GREEN,1.2,pilot_study_data/4/audios/congruent_9_color.wav, Green.,1.2
+congruent,color,BLUE,1.2,pilot_study_data/4/audios/congruent_10_color.wav, Do,1.2
+congruent,color,YELLOW,1.2,pilot_study_data/4/audios/congruent_11_color.wav, Hello...,1.2
+conflict,word,BLUE,1.2,pilot_study_data/4/audios/conflict_0_word.wav,,0.30500000000000005
+conflict,word,GREEN,1.2,pilot_study_data/4/audios/conflict_1_word.wav, Blue Green,1.2
+conflict,word,YELLOW,1.2,pilot_study_data/4/audios/conflict_2_word.wav, Hello.,1.2
+conflict,word,RED,1.2,pilot_study_data/4/audios/conflict_3_word.wav, read,1.2
+conflict,word,RED,1.2,pilot_study_data/4/audios/conflict_4_word.wav, Right,1.2
+conflict,word,RED,1.2,pilot_study_data/4/audios/conflict_5_word.wav, Red,0.985
+conflict,word,GREEN,1.2,pilot_study_data/4/audios/conflict_6_word.wav, Green,1.035
+conflict,word,BLUE,1.2,pilot_study_data/4/audios/conflict_7_word.wav, blue,1.06
+conflict,word,GREEN,1.2,pilot_study_data/4/audios/conflict_8_word.wav, Green.,1.2
+conflict,word,YELLOW,1.2,pilot_study_data/4/audios/conflict_9_word.wav, Hello.,1.025
+conflict,word,YELLOW,1.2,pilot_study_data/4/audios/conflict_10_word.wav, You loot.,1.01
+conflict,word,BLUE,1.2,pilot_study_data/4/audios/conflict_11_word.wav, Blue.,0.975
+conflict,color,YELLOW,1.2,pilot_study_data/4/audios/conflict_0_color.wav, Yellow,1.2
+conflict,color,RED,1.2,pilot_study_data/4/audios/conflict_1_color.wav, Red,1.08
+conflict,color,GREEN,1.2,pilot_study_data/4/audios/conflict_2_color.wav,,1.2
+conflict,color,GREEN,1.2,pilot_study_data/4/audios/conflict_3_color.wav,,1.2
+conflict,color,BLUE,1.2,pilot_study_data/4/audios/conflict_4_color.wav, Blue,1.05
+conflict,color,YELLOW,1.2,pilot_study_data/4/audios/conflict_5_color.wav, yeah lou,1.2
+conflict,color,YELLOW,1.2,pilot_study_data/4/audios/conflict_6_color.wav, yellow,1.2
+conflict,color,GREEN,1.2,pilot_study_data/4/audios/conflict_7_color.wav,,1.2
+conflict,color,BLUE,1.2,pilot_study_data/4/audios/conflict_8_color.wav,,1.2
+conflict,color,BLUE,1.2,pilot_study_data/4/audios/conflict_9_color.wav,,1.2
+conflict,color,RED,1.2,pilot_study_data/4/audios/conflict_10_color.wav, Red,1.01
+conflict,color,RED,1.2,pilot_study_data/4/audios/conflict_11_color.wav, Red,1.02
